@@ -8,23 +8,29 @@
 
 3. 输出结构化、可信的自然语言答案
 
-## 通过爬虫爬取语料文档
 
-从人民日报的文章存档（23年5月至24年4月）爬取语料。文章存档的链接为：https://paper.people.com.cn/rmrb/html/2024-05/14/nbs.D110000renmrb_01.htm#/
+## 爬虫
+已完成。
 
-你需要爬取所需时间段内一天、每一版的每一篇文章，抓取标题、日期、url、正文内容。
+## agent构建
 
-请将每篇文章保存为一个json对象。
+构建一个rag，使用langchain架构
+
+用户问题 → 语义检索模块 → Top-K 文档 → 拼接上下文 → LLM Prompt → 回答
 
 ``` 
-[
-  {
-    "title": "文章标题",
-    "url": "文章网址",
-    "date": "发布日期（YYYY-MM-DD）",
-    "content": "文章正文全文"
-  },
-  ...
-]
+rag-qa-system/
+├── data/                         # 语料文件
+│   ├── 2023-05-01.json
+│   ├── 2023-05-02.json
+│   └── ...
+├── index/                        # 检索索引
+│   └── faiss_index.bin
+├── scripts/
+│   ├── build_index.py           # 构建语料索引
+│   └── query_rag.py             # 输入问题，生成回答
+├── prompts/
+│   └── base_prompt.txt          # Prompt 模板
+├── requirements.txt             # 所需依赖库
+└── config.yaml                  # 参数配置，如top_k、模型类型等
 ```
-

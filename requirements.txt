@@ -1,0 +1,6 @@
+langchain
+faiss-cpu
+openai
+sentence-transformers
+pyyaml
+tqdm 
