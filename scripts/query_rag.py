@@ -105,7 +105,7 @@ def build_prompt(contexts, question, keywords):
 def ask_gpt4(prompt):
     client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
         max_tokens=512
@@ -125,7 +125,7 @@ def extract_keywords_with_llm(question):
         f"问题：{question}"
     )
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
         max_tokens=64
@@ -152,7 +152,7 @@ def single_doc_agent(doc, question):
         f"【用户问题】\n{question}\n"
     )
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
         max_tokens=512
@@ -179,7 +179,7 @@ def extract_evidence_agent(contexts, question, keywords, max_evidence=5):
             f"【用户问题】\n{question}\n"
         )
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             temperature=0,
             max_tokens=1024
@@ -202,7 +202,7 @@ def summarize_agent(evidence_str, question):
         f"【用户问题】\n{question}\n"
     )
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
         max_tokens=512

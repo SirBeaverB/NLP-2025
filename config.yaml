@@ -1,5 +1,10 @@
 embedding_model: all-MiniLM-L6-v2
-llm_model: gpt-4
+llm_model: gpt-4o-mini
 index_path: index/faiss_index.bin
 data_path: data/
-top_k: 5 
+top_k: 5
+use_kg: true
+kg_triples_path: data/kg/triples.csv
+kg_entities_path: data/kg/entities.json  # 可选
+kg_schema_path: data/kg/schema.yaml      # 可选
+kg_index_path: index/kg_index.pkl 
