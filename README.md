@@ -2,4 +2,4 @@
 homework repo!
 
 
-In a new environment, after installing requirements, run `build_index.py`, then run `query_rag.py`.
+In a new environment, after installing requirements, run `build_index.py`, add openai API key, then run `query_kg_rag.py`.

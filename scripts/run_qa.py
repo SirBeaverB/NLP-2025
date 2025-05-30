@@ -149,6 +149,20 @@ def evaluate(queries: list):
                     print(f"处理开放题时出错: {str(e)}")
                     answers.append("出错")
 
+            if is_open:
+                # 提取答案中的链接
+                urls = []
+                if contexts:
+                    urls = [doc.get('url', '') for doc in contexts if doc.get('url')]
+                # 从答案中删除URL
+                ans_text = answers[-1]
+                for url in urls:
+                    ans_text = ans_text.replace(url, '')
+                answers[-1] = {
+                    'ans': ans_text.strip(),
+                    'reference': urls
+                }
+
             # 清理CUDA cache
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
@@ -174,7 +188,9 @@ if __name__ == '__main__':
 "2023-2024赛季国际滑联短道速滑世界杯北京站比赛中，刘少昂参与获得几枚奖牌?",
 "福建自贸试验区在自贸建设十年中主要从哪几个方面推动改革创新?",
 "杭州第十九届亚洲运动会共举行多少天?",
-"哪些单位在中国期刊高质量发展论坛的主论坛上做主题演讲?"
-"绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策"]
+"哪些单位在中国期刊高质量发展论坛的主论坛上做主题演讲?",
+"绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策",
+"我国科技创新的重大成就有哪些?"]
+query = ["绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策"]
 ans = evaluate(query)
 print(ans)
