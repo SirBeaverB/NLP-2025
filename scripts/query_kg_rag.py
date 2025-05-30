@@ -6,17 +6,20 @@ from sentence_transformers import SentenceTransformer
 import torch
 import re
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import openai
+from utils_kg import KGUtils
+import gc
 
 '''
-openai的API有点贵，还容易超token
-直接改用Qwen3-0.6B本地部署
+openai的API有点贵，还容易超token，只用做关键词提取
+直接改用Qwen3-4B本地部署
 '''
 
 # Load model directly
 from transformers import pipeline
 
 # 初始化Qwen3-4B pipeline
-qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-0.6B")
+qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-4B")
 
 # 加载配置
 with open('config.yaml', 'r') as f:
@@ -50,13 +53,17 @@ with open(INDEX_PATH + '.meta', 'r', encoding='utf-8') as f:
 with open('prompts/base_prompt.txt', 'r', encoding='utf-8') as f:
     base_prompt = f.read()
 
-llm_model_name = "Qwen/Qwen3-0.6B"  # 或 "Qwen/Qwen3-4B"
+llm_model_name = "Qwen/Qwen3-4B"  # 或 "Qwen/Qwen3-4B"
 llm_tokenizer = AutoTokenizer.from_pretrained(llm_model_name)
 llm_model = AutoModelForCausalLM.from_pretrained(
     llm_model_name,
     torch_dtype="auto",
     device_map="auto"
 )
+
+# 加载知识图谱
+kg_path = 'kg/kg.pkl'
+kg_utils = KGUtils(kg_path)
 
 def qwen_chat(messages, max_new_tokens=2048):
     text = llm_tokenizer.apply_chat_template(
@@ -159,121 +166,152 @@ def ask_qwen3(prompt):
 
 
 def extract_keywords_with_llm(question):
+    client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     prompt = (
-        "请从下面的问题中提取最关键的1个用于检索的关键词或短语，注意不要有过多定语，你想通过搜索这个关键词找到相关内容"
-        "只输出用逗号分隔的关键词列表，不要解释。\n\n"
-        "e.g. 问题：2024年我国文化和旅游部部长是谁？\n"
-        "关键词：文化和旅游部部长\n"
-        "e.g. 问题：2024年是中国红十字会成立多少周年？\n"
-        "关键词：中国红十字会\n"
+        "请从下面的问题中提取最关键的1-3个用于检索的关键词或短语，能少就少，注意不要有过多定语，你想通过搜索这个关键词找到相关内容。"
+        "只输出用逗号分隔的关键词列表，不要解释。\n"
+        "此外，请判断该问题是否为开放题（即答案不是唯一事实、需要主观判断或综合分析），如果是开放题请输出True，否则输出False。"
+        "输出格式严格如下：\n关键词：xxx,yyy\n开放题：True/False\n"
+        "e.g. 问题：2024年我国文化和旅游部部长是谁？\n关键词：文化和旅游部部长\n开放题：False\n"
+        "e.g. 问题：你如何看待人工智能对未来社会的影响？\n关键词：人工智能,未来社会\n开放题：True\n"
         f"问题：{question}"
     )
-    messages = [{"role": "user", "content": prompt}]
-    keywords = qwen_chat(messages)
-    return [k.strip() for k in keywords.split(',') if k.strip()]
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0,
+        max_tokens=128
+    )
+    content = response.choices[0].message.content.strip()
+    # 解析关键词和开放题bool
+    keywords = []
+    is_open = False
+    for line in content.splitlines():
+        if line.startswith('关键词：'):
+            keywords = [k.strip() for k in line.replace('关键词：','').split(',') if k.strip()]
+        if line.startswith('开放题：'):
+            is_open = 'true' in line.lower()
+    return keywords, is_open
 
 
-def single_doc_agent(doc, question):
-    title = doc.get('title', '')
-    url = doc.get('url', '')
-    date = doc.get('date', '')
-    content = doc.get('content', doc.get('text', ''))
-    snippet = extract_relevant_snippet(content, question, [], max_length=1000)
-    context_str = f"【标题】{title}\n【日期】{date}\n【链接】{url}\n【内容】{snippet}\n"
+
+# 知识图谱问答函数
+
+def answer_with_kg(question, keywords):
+    # 只用第一个关键词做实体查找
+    if not keywords:
+        return '未提取到关键词，无法用KG回答', None
+    entity = kg_utils.find_entity(keywords[0])
+    if not entity:
+        return f'知识图谱中未找到实体：{keywords[0]}', None
+    triples = kg_utils.get_triples(entity)
+    if not triples:
+        return f'知识图谱中未找到与实体"{entity}"相关的三元组', entity
+    # 简单拼接三元组作为答案
+    triple_strs = [f'{h} --{r}--> {t}' for h, r, t in triples]
+    answer = f'实体"{entity}"相关的知识：\n' + '\n'.join(triple_strs)
+    return answer, entity
+
+# 综合KG和RAG答案
+def summarize_kg_rag(kg_answer, rag_answer, question):
     prompt = (
-        "请判断下列语料内容是否已经足够唯一、准确地回答用户问题。如果足够，请直接给出简明、结构化的中文答案，并在最后一行输出"
-        "参考链接：后面跟上该原文url；如果不足，请只回复：'信息不足'，不要编造内容。\n\n"
-        f"【语料内容】\n{context_str}\n"
-        f"【用户问题】\n{question}\n"
+        "请根据以下两部分信息，综合推理并用中文简明地回答用户问题，不需做出解释。\n"
+        "【KG答案】：\n" + kg_answer + "\n"
+        "【RAG答案】：\n" + rag_answer + "\n"
+        "【用户问题】：\n" + question + "\n"
+        "请综合两部分信息，优先使用更权威、直接的内容，必要时可融合推理。若信息不足请直接回复信息不足。"
     )
     messages = [{"role": "user", "content": prompt}]
     return qwen_chat(messages)
 
-
-def extract_evidence_agent(contexts, question, keywords, max_evidence=5):
-    all_evidence = []
-    # 对每篇文章单独调用agent
-    for doc in contexts:
+def open_question_agent(kg_answer, rag_docs, question, keywords):
+    # 拼接KG和RAG内容
+    rag_context = ''
+    for doc in rag_docs:
         title = doc.get('title', '')
         url = doc.get('url', '')
         date = doc.get('date', '')
         content = doc.get('content', doc.get('text', ''))
-        context_str = f"【标题】{title}\n【日期】{date}\n【链接】{url}\n【内容】{content}\n"
-        prompt = (
-            f"请从下列语料内容中，筛选出可能可以回答用户问题的最相关的1-{max_evidence}条证据片段（可以是原文中的句子或段落），"
-            "比如，用户问：澜湄六国是哪六个国家？那么出现在相关文章里的国家名都可能是证据，"
-            "每条证据请用'证据X:'开头，后面跟上原文内容和对应的url。只输出证据，不要总结和解释。\n\n"
-            f"【语料内容】\n{context_str}\n"
-            f"【用户问题】\n{question}\n"
-        )
-        messages = [{"role": "user", "content": prompt}]
-        evidence = qwen_chat(messages)
-        if evidence and evidence != '信息不足':
-            all_evidence.append(evidence)
-    # 合并所有证据
-    return '\n\n'.join(all_evidence)
-
-
-def summarize_agent(evidence_str, question):
+        snippet = extract_relevant_snippet(content, question, keywords, max_length=1000)
+        rag_context += f"【标题】{title}\n【日期】{date}\n【链接】{url}\n【内容】{snippet}\n\n"
     prompt = (
-        "请根据下列证据片段，综合推理并回答用户问题。"
-        "请给出结构化、简明的中文答案，并在最后一行输出参考链接：后面列出所有用到的url（用逗号分隔，必须是证据中真实存在的url）；"
-        "如果信息仍然不足，请只回复：'信息不足'，不要编造内容。\n\n"
-        f"【证据片段】\n{evidence_str}\n"
+        "你是一个知识型问答助手。请综合下列知识图谱信息和检索到的多篇文章内容，给出一个自由度较高、结构化、条理清晰的中文回答。"
+        "可以适当分析、归纳、推理，允许有主观判断，但要基于提供的内容。不多于512个字。"
+        "如有引用内容，请在段末注明来源url。若信息不足可适当发挥，但不要编造具体事实。\n\n"
+        f"【知识图谱信息】\n{kg_answer}\n\n"
+        f"【相关文章内容】\n{rag_context}\n"
         f"【用户问题】\n{question}\n"
     )
-    messages = [{"role": "user", "content": prompt}]
-    return qwen_chat(messages)
-
+    return ask_qwen3(prompt)
 
 def main():
-    print("欢迎使用RAG问答系统，输入你的问题（输入exit退出）：")
+    print("欢迎使用RAG+KG问答系统，输入你的问题（输入exit退出）：")
     while True:
         question = input("问题：")
         if question.strip().lower() == 'exit':
             break
         # 先用 LLM agent 提取关键词
-        keywords = extract_keywords_with_llm(question)
+        keywords, is_open = extract_keywords_with_llm(question)
         print("LLM提取的关键词:", keywords)
-        # 检索
-        contexts = retrieve(question, corpus, keywords, top_k=5)
-        # 先用单文档agent判断每一篇文档能否唯一回答
-        found = False
-        for doc in contexts:
-            single_ans = single_doc_agent(doc, question)
-            if single_ans != '信息不足':
-                # 提取url
-                match = re.search(r'参考链接[:：]\s*(\S+)', single_ans)
-                url = match.group(1) if match else doc.get('url', '')
-                ans = single_ans.split('\n')[0] if '参考链接' in single_ans else single_ans
-                print(f"\n【答案】\n{ans}\n")
-                if url:
-                    print(f"【参考链接】\n{url}\n")
-                found = True
-                break
-        if found:
-            continue
-        # 否则用证据抽取+推理agent
-        evidence_str = extract_evidence_agent(contexts, question, keywords, max_evidence=5)
-        print("\n【证据片段】\n" + evidence_str + "\n")
-        summary_ans = summarize_agent(evidence_str, question)
-        if summary_ans != '信息不足':
-            match = re.search(r'参考链接[:：]\s*(\S+)', summary_ans)
-            urls = []
-            if match:
-                urls = [u.strip() for u in match.group(1).split(',') if u.strip()]
-            ans = summary_ans.split('\n')[0] if '参考链接' in summary_ans else summary_ans
-            print(f"\n【答案】\n{ans}\n")
-            if urls:
-                print(f"【参考链接】")
-                for url in urls:
-                    print(url)
-                print()
-            continue
-        # 否则走原有prompt
-        prompt = build_prompt(contexts, question, keywords)
-        answer = ask_qwen3(prompt)
-        print("\n【答案】\n" + answer + "\n")
+        print("是否为开放题:", is_open)
+        if not is_open:
+            # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
+            kg_answer, kg_entity = answer_with_kg(question, keywords)
+            print("\n【KG答案】\n" + kg_answer + "\n")
+            # RAG检索最相关一篇
+            contexts = retrieve(question, corpus, keywords, top_k=1)
+            rag_answer = ''
+            rag_urls = []
+            if contexts:
+                doc = contexts[0]
+                # 直接使用最相关文章构建prompt
+                prompt = build_prompt([doc], question, keywords)
+                rag_answer = ask_qwen3(prompt)
+                rag_urls = [doc.get('url', '')] if doc.get('url') else []
+            print("\n【RAG答案】\n" + rag_answer + "\n")
+            print("\n【汇总】")
+            print("KG答案：" + kg_answer)
+            print("RAG答案：" + rag_answer)
+            if rag_urls:
+                print("RAG参考链接：" + ', '.join(rag_urls))
+                # reread: 重新读取参考链接对应的文章内容
+                reread_contexts = []
+                for url in rag_urls:
+                    for doc in corpus:
+                        if doc.get('url', '') == url:
+                            reread_contexts.append(doc)
+                            break
+                if reread_contexts:
+                    reread_prompt = build_prompt(reread_contexts, question, keywords)
+                    reread_answer = ask_qwen3(reread_prompt)
+                    print("\n【Reread最终答案】\n" + reread_answer + "\n")
+            fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
+            print("\n【KG+RAG综合最终答案】\n" + fusion_answer + "\n")
+            print("参考链接：" + ', '.join(rag_urls))
+            print("\n-----------------------------\n")
+            
+        else:
+            # 开放题处理：KG和RAG各检索3篇，综合生成自由度较高的回答
+            kg_answer, kg_entity = answer_with_kg(question, keywords)
+            print("\n【KG答案】\n" + kg_answer + "\n")
+            # RAG检索3篇
+            contexts = retrieve(question, corpus, keywords, top_k=2)
+            print("\n【RAG相关文章数量】", len(contexts))
+            # 综合生成开放性回答
+            open_answer = open_question_agent(kg_answer, contexts, question, keywords)
+            print("\n【开放题综合回答】\n" + open_answer + "\n")
+            print("\n-----------------------------\n")
+
+        # 清理CUDA cache
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        try:
+            # 清理本轮变量
+            del keywords, kg_answer, kg_entity, contexts, rag_answer, rag_urls
+            gc.collect()
+        except:
+            pass
+
 
 if __name__ == '__main__':
     main() 
