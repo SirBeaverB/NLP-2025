@@ -246,19 +246,19 @@ def open_question_agent(kg_answer, rag_docs, question, keywords):
     return ask_qwen3(prompt)
 
 def main():
-    print("欢迎使用RAG+KG问答系统，输入你的问题（输入exit退出）：")
+    #print("欢迎使用RAG+KG问答系统，输入你的问题（输入exit退出）：")
     while True:
         question = input("问题：")
         if question.strip().lower() == 'exit':
             break
         # 先用 LLM agent 提取关键词
         keywords, is_open = extract_keywords_with_llm(question)
-        print("LLM提取的关键词:", keywords)
-        print("是否为开放题:", is_open)
+        #print("LLM提取的关键词:", keywords)
+        #print("是否为开放题:", is_open)
         if not is_open:
             # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
             kg_answer, kg_entity = answer_with_kg(question, keywords)
-            print("\n【KG答案】\n" + kg_answer + "\n")
+            #print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索最相关一篇
             contexts = retrieve(question, corpus, keywords, top_k=2)
             rag_answer = ''
@@ -268,12 +268,12 @@ def main():
                 prompt = build_prompt(contexts, question, keywords)
                 rag_answer = ask_qwen3(prompt)
                 rag_urls = [doc.get('url', '') for doc in contexts if doc.get('url')]
-            print("\n【RAG答案】\n" + rag_answer + "\n")
-            print("\n【汇总】")
-            print("KG答案：" + kg_answer)
-            print("RAG答案：" + rag_answer)
+            #print("\n【RAG答案】\n" + rag_answer + "\n")
+            #print("\n【汇总】")
+            #print("KG答案：" + kg_answer)
+            #print("RAG答案：" + rag_answer)
             if rag_urls:
-                print("RAG参考链接：" + ', '.join(rag_urls))
+                #print("RAG参考链接：" + ', '.join(rag_urls))
                 # reread: 重新读取参考链接对应的文章内容
                 reread_contexts = []
                 for url in rag_urls:
@@ -284,23 +284,23 @@ def main():
                 if reread_contexts:
                     reread_prompt = build_prompt(reread_contexts, question, keywords)
                     reread_answer = ask_qwen3(reread_prompt)
-                    print("\n【Reread最终答案】\n" + reread_answer + "\n")
+                    #print("\n【Reread最终答案】\n" + reread_answer + "\n")
             fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
-            print("\n【KG+RAG综合最终答案】\n" + fusion_answer + "\n")
-            print("参考链接：" + ', '.join(rag_urls))
-            print("\n-----------------------------\n")
+            print(fusion_answer)
+            #print("参考链接：" + ', '.join(rag_urls))
+            #print("\n-----------------------------\n")
             
         else:
             # 开放题处理：KG和RAG各检索3篇，综合生成自由度较高的回答
             kg_answer, kg_entity = answer_with_kg(question, keywords)
-            print("\n【KG答案】\n" + kg_answer + "\n")
+            #print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索3篇
             contexts = retrieve(question, corpus, keywords, top_k=2)
-            print("\n【RAG相关文章数量】", len(contexts))
+            #print("\n【RAG相关文章数量】", len(contexts))
             # 综合生成开放性回答
             open_answer = open_question_agent(kg_answer, contexts, question, keywords)
-            print("\n【开放题综合回答】\n" + open_answer + "\n")
-            print("\n-----------------------------\n")
+            print(open_answer)
+            #print("\n-----------------------------\n")
 
         # 清理CUDA cache
         if torch.cuda.is_available():
