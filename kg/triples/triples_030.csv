@@ -1,0 +1,1001 @@
+head,relation,tail
+哈伊马角经济区,country,阿联酋
+美国联邦储备委员会,country,美国
+联邦公开市场委员会,country,美国
+埃尔奥拉,located on terrain feature,阿拉伯半岛
+阿拉伯半岛,highest point,埃尔奥拉
+丝绸之路,creator,习近平主席
+范茶美,country of citizenship,越南
+范茶美,notable work,梦幻花园
+梦幻花园,country of origin,越南
+梦幻花园,creator,范茶美
+阮光中,country of citizenship,越南
+潘锦上,country of citizenship,越南
+巴西,part of,南半球
+伊瓜苏市,country,巴西
+伊瓜苏和平广场,country,巴西
+伊瓜苏和平广场,located in the administrative territorial entity,伊瓜苏市
+伊瓜苏市,located in the administrative territorial entity,伊瓜苏市
+伊瓜苏市,contains settlement,伊瓜苏和平广场
+万里河山,located in the administrative territorial entity,神州
+旌阳区,located in the administrative territorial entity,德阳市
+黄许镇,located in the administrative territorial entity,旌阳区
+卫生健康委,located in the administrative territorial entity,衢州市
+菊花茶,part of,中医
+玫瑰花茶,part of,中医
+茉莉花茶,part of,中医
+枸杞,part of,中医
+石斛,part of,中医
+蒲公英茶,part of,中医
+金银花茶,part of,中医
+黑影,anatomical location,视网膜
+月亮,instance of,天体
+星星,subclass of,天体
+胰岛素,use,农业
+舒晋瑜,occupation,作家
+徐坤,occupation,作家
+物流,part of,实体经济
+全国两会,office contested,国务院总理
+雪豹,subclass of,极地特种载具
+泰晤士河,country,英国
+波士顿港,country,美国
+台山市,located in the administrative territorial entity,江门
+集美新城,located in the administrative territorial entity,集美区
+天宫画展,location,中国空间站
+衡水湖,located in the administrative territorial entity,衡水市
+峡江县,located in the administrative territorial entity,吉安市
+罗田镇,located in the administrative territorial entity,峡江县
+柏树镇,located in the administrative territorial entity,崇信县
+慕尼黑安全会议,organizer,慕安会
+慕尼黑安全会议,organiz,慕安会
+阿联酋外贸国务部长,country,阿联酋
+萨尼·泽尤迪,position held,阿联酋外贸国务部长
+萨尼·泽尤迪,country of citizenship,阿联酋
+阿联酋,executive body,阿联酋外贸国务部长
+阿联酋,part of,西亚
+春节灯展,director,苏拉威·什雷斯塔
+普吕特纳,position held,德国总理外事顾问
+杨万明,member of,中国人民对外友好协会
+谢春涛,position held,中共中央党校(国家行政学院)分管日常工作的副校(院)长
+穆伊尼,member of political party,塔吉克斯坦人民民主党
+魏巧,position held,全国人大代表
+西藏自治区农牧科学院,located in the administrative territorial entity,西藏自治区
+何坝街道,located in the administrative territorial entity,凤冈县
+节粮,subclass of,食物
+水利部,part of,国务院
+张政,employer,国务院
+国务院港澳事务办公室,part of,国务院
+卞志刚,employer,国务院
+国家体育总局,part of,国务院
+丰台区图书馆,located in the administrative territorial entity,丰台区
+瑶海区,located in the administrative territorial entity,合肥市
+恒通社区,located in the administrative territorial entity,瑶海区
+恒通生活小区,located in the administrative territorial entity,瑶海区
+<unk>亭区,located in the administrative territorial entity,宜昌市
+楚能科技大学,located in the administrative territorial entity,宜昌市
+白之羽,illustrator,沈亦伶
+元宵节,part of,农历
+弥渡县,located in the administrative territorial entity,大理白族自治州
+密祉镇,located in the administrative territorial entity,弥渡县
+宁波华茂外国语学校,located in the administrative territorial entity,宁波市
+春节,follows,元宵佳节
+元宵佳节,follows,春节
+贾家庄村,located in the administrative territorial entity,汾阳市
+余脉,located in the administrative territorial entity,北京
+大年初二,part of,过年
+元宵节,location,北京
+元宵,location,北京
+七八,follows,正月
+国泰民安,located in the administrative territorial entity,国泰
+滕州市,located in the administrative territorial entity,山东省
+2024全国网上年货节,organizer,商务部
+模式口历史文化街区,located in the administrative territorial entity,石景山区
+中国载人航天工程办公室,item operated,揽月
+张紫竹,educated at,中国石油大学(北京)马克思主义学院
+哈尔滨道里菜市场,located in the administrative territorial entity,哈尔滨
+哈尔滨道里菜市场,located in the,哈尔滨
+中国国家铁路集团有限公司,industry,铁路运输
+2024年新加坡航展,point in time,2024年
+2024年新加坡航展,location,樟宜会展中心
+樟宜会展中心,significant event,2024年新加坡航展
+德国,continent,亚洲
+慕安会,country,德国
+慕安会,chairperson,霍伊斯根
+霍伊斯根,member of,慕安会
+刘千慈,instrument,大提琴
+阿联酋,diplomatic relation,克罗地亚
+艾因·夏姆斯大学,country,埃及
+哈桑·拉杰卜,educated at,艾因·夏姆斯大学
+哈桑·拉杰卜,educated at,北京大学
+北京饭店,located in the administrative territorial entity,北京
+社会主义市场经济体制,has cause,改革开放
+曹县,located in the administrative territorial entity,菏泽市
+南方医院,located in the administrative territorial entity,广州
+碧海银滩,located in the administrative territorial entity,厦门
+中共中央台办,part of,中共中央台办
+国务院台办,part of,国务院台办
+彭山区,located in the administrative territorial entity,眉山市
+昆山市,located in the administrative territorial entity,苏州
+陆家镇,located in the administrative territorial entity,昆山市
+张浦镇,located in the administrative territorial entity,昆山市
+王心仪,educated at,北京大学
+教育,has quality,民族振兴
+李敷仁,educated at,延安大学
+郭小良,educated at,延安大学
+槟城,located in the administrative territorial entity,马来西亚
+槟州,located in the administrative territorial entity,马来西亚
+槟州,capital,槟城
+奇里·特·卡娜娃剧院,country,新西兰
+奇里·特·卡娜娃剧院,located in the administrative territorial entity,奥克兰
+香港演艺学院,located in the administrative,香港
+打卡大三巴牌坊,located in the administrative territorial entity,澳门
+周末,follows,夜晚
+戏曲,subclass of,中华文化
+永宁县,located in the administrative territorial entity,银川市
+贺兰山,located in the administrative territorial entity,宁夏回族自治区
+吴忠市,located in the administrative territorial entity,内蒙古
+长征国家文化公园,named after,长征
+长征国家文化公园,named after,长
+汴京灯笼张,subclass of,灯彩
+三河市,located in the administrative territorial entity,河北
+新安小学校,located in the administrative territorial entity,淮安市
+婺城区,located in the administrative territorial entity,金华市
+蒋堂镇,located in the administrative territorial entity,婺城区
+内蒙古自治区文化和旅游厅,applies to jurisdiction,内蒙古自治区
+赤峰,located in the administrative territorial entity,内蒙古自治区
+赤峰,located in the administrative territorial entity,内蒙古
+鄂伦春自治旗,located in the administrative territorial entity,内蒙古自治区
+鄂伦春自治旗,located in the administrative territorial entity,内蒙古
+贸易保护主义,facet of,贸易
+扎曼,country of citizenship,孟加拉国
+楠普拉省,located in the administrative territorial entity,莫桑比克
+楠普拉省,capital,马来马
+马来马,country,莫桑比克
+马来马,located in the administrative territorial entity,楠普拉省
+郊区,country,莫桑比克
+郊区,located in the administrative territorial entity,马来马
+纳卡拉走廊铁路,country,莫桑比克
+纳卡拉走廊铁路,located in the administrative territorial entity,楠普拉省
+纳卡拉港口,country,莫桑比克
+纳卡拉港口,located in the administrative territorial entity,楠普拉省
+柏林中国文化中心,country,德国
+库内内—奥马坦度变电站,country,纳米比亚
+比利时,member of,联合国教科文组织
+班什国际狂欢节,country,比利时
+黄茂兴,position held,全国人大代表
+节约粮食,subclass of,节约
+中国式现代化,country,中华人民共和国
+改革,country,中华人民共和国
+全面深化改革,country,中华人民共和国
+经济回升,country,中华人民共和国
+作风转变,country,中华人民共和国
+全面从严治党,country,中华人民共和国
+强国建设,country,中华人民共和国
+电气机械,subclass of,机械工业
+习近平新时代中国特色社会主义思想,publication date,2014年2月27日
+刘国中,position held,国务院总理
+十四届全国人大常委会第八次会议,follows,十四届全国人大常委会第八次会议
+2024年全国“打假治敲”专项行动暨传媒监管电视电话会议,point in time,2024年
+2024年全国“打假治敲”专项行动,point in time,2024年
+豆蔻山脉,country,柬埔寨
+戈公省,located in the administrative territorial entity,柬埔寨
+莫邦县,country,柬埔寨
+莫邦县,located in the administrative territorial entity,戈公省
+中国,member of,金砖
+中国,diplomatic relation,沙特
+中国,diplomatic relation,阿联酋
+中国,diplomatic relation,伊朗
+中国,diplomatic relation,埃塞俄比亚
+沙特,diplomatic relation,中国
+阿联酋,diplomati,埃及
+2008年北京奥运会场馆,located in the administrative territorial entity,北京
+2022年北京冬奥会场馆,located in the administrative territorial entity,北京
+北京奥运博物馆,located in the administrative territorial entity,北京
+陈江和,country of citizenship,新加坡
+朱利叶斯·马达·比奥,date of birth,1964年5月
+朱利叶斯·马达·比奥,member of political party,塞拉利昂人民党
+纳米比亚,capital,温得和克
+纳米比亚,head of state,姆本巴
+温得和克,country,纳米比亚
+姆本巴,country of citizenship,纳米比亚
+姆本巴总统,country of citizenship,纳米比亚
+阿联酋,member of,世贸组织
+谢尔达罗夫,member of political party,土库曼斯坦民主党
+朴实,member of political party,中国共产党
+拉玉乡,located in the administrative territorial entity,琼结县
+骆源作,member of,全国人大宪法和法律委员会
+保守国家秘密法修订草案,main subject,保守国家秘密法
+张华浜码头,located in the administrative territorial entity,上海
+炭厂村,located in the administrative territorial entity,门头沟区
+邢卫兵,position held,全国人大代表
+范国强,educated at,河南农业大学
+丁晓梅,occupation,快递员
+金融机构,field of work,实体经济
+文化市集,subclass of,市集
+李忱阳文,field of work,制造业
+乡村漫步,subclass of,城市漫步
+国家能源局,headquarters location,京
+舌尖上的浪费,subclass of,浪费
+舌尖上的浪费,sub,浪费
+兰州大学,located in the administrative territorial entity,兰州市
+净月潭,located in the administrative territorial entity,吉林
+净月雪世界,located in the administrative territorial entity,吉林
+来现余,position held,北京市发展改革委
+刘捍东,member of political party,中国共产党
+郑学林,member of political party,中国共产党
+兴化市,located in the administrative territorial entity,江苏省
+卫浴,manufacturer,恒洁卫浴集团有限公司
+全过程人民民主,subclass of,民主
+屏山镇,located in the administrative territorial entity,石城县
+双流区,located in the administrative territorial entity,成都市
+永安镇,located in the administrative territorial entity,双流区
+<unk>河,located in the administrative territorial entity,河南
+殷墟博物馆,located in the administrative territorial entity,安阳
+中国航天科技集团有限公司,item operated,鹊桥二号
+中国航天科技集团有限公司,item operated,嫦娥六号
+中国航天科技集团有限公司,item operated,长征六号丙
+中国航天科技集团有限公司,item operated,长征十二号
+中国航天科技集团有限公司,item operated,长征系列运载火箭
+鹊桥二号,manufacturer,中国航天科技集团有限公司
+嫦娥六号,manufacturer,中国航天科技集团有限公司
+长征六号丙,manufacturer,中国航天科技集团有限公司
+长征十二号,manufacturer,中国航天科技集团有限公司
+长征系列运载火箭,manufacturer,中国航天科技集团有限公司
+景德镇市,located in the administrative territorial entity,南昌
+清华大学医学院,affiliation,清华大学
+洪波,educated at,清华大学
+贾旺,educated at,清华大学
+华为云软件开发生产线,owned by,中国经济信息社
+中国经济信息社,subsidiary,华为云软件开发生产线
+厦门,located in or next to body of water,蔚蓝的海
+厦门市,located in or next to body of water,蔚蓝的海
+中国空间站,crew member(s),神舟十七号
+孔怡,position held,全国人大代表
+雪亮,position held,全国人大常委会副委员长
+冰雪大世界,located in the administrative territorial entity,哈尔滨市
+林湖乡,located in the administrative territorial entity,兴化市
+全国人大常委会委员长,appointed by,全国人民代表大会
+十四届全国人大常委会第八次会议,chairperson,赵乐际
+第十四届全国人民代表大会代表,member of,第十四届全国人民代表大会常务委员会
+程永生,occupation,审判员
+林莹,occupation,审判员
+汪国献,occupation,审判员
+北京,head of state,习近平同志
+北京城市副中心站,located in the administrative territorial entity,北京
+张新泽,position held,最高人民检察院检察员
+王亚卿,position held,最高人民检察院检察员
+李伟,position held,最高人民检察院检察员
+常小锐,position held,最高人民检察院检察员
+孙加瑞,position held,最高人民检察院检察员
+西合休乡,located in the administrative territorial entity,叶城县
+福建,head of state,习近平
+厦门大学,located in the administrative territorial entity,福建
+世贸组织,political ideology,多边主义
+世贸组织,political ide,多边主义
+彼得·汤姆森,position held,联合国秘书长
+下潭尾红树林公园,located in the administrative territorial entity,厦门
+格洛斯特郡,country,英国
+莫利,child,维尼
+越南,diplomatic relation,马来西亚
+广宁省,located in the administrative territorial entity,越南
+云屯国际机场,country,越南
+云屯国际机场,place served by transport hub,广宁省
+马来西亚,diplomatic relation,越南
+阿联酋,head of state,阿扎利
+阿联酋,office held by head of government,阿联酋阿布扎比王储
+阿扎利,country of citizenship,阿联酋
+奥尔塔,position held,东帝汶总统
+阿联酋阿布扎比王储,country,阿联酋
+王文涛,position held,中国商务部部长
+信息无障碍,subclass of,无障碍
+广南县,located in the administrative territorial entity,文山壮族苗族自治州
+丁庄水库,located in the administrative territorial entity,德州
+袁达,employer,国家发展改革委
+袁达,employer,国家
+国家市场监督管理总局,subsidiary,国家企业信用信息公示系统
+国家企业信用信息公示系统,owned by,国家市场监督管理总局
+金融乱象,subclass of,金融
+腐败,subclass of,金融
+经济金融风险,subclass of,金融
+金融监管,facet of,金融
+查干湖,located in the administrative territorial entity,吉林
+蚌埠市,located in the administrative territorial entity,安徽省
+金山,located in the administrative territorial entity,山东省
+宜昌北站,located in the administrative territorial entity,宜昌市
+国有资本经营预算,facet of,国有资本
+第十四届全国冬季运动会,organizer,第十四届全国冬季运动会组委会
+第十四届全国冬季运动会组委会,part of,国家体育总局
+第十四届全国冬季运动会,sport,中国冰雪运动
+北京冬奥会,sport,中国冰雪运动
+短道速滑,sport,中国冰雪运动
+单板滑雪,sport,中国冰雪运动
+中国冰雪运动,country,中国
+辽阔草原,country,中国
+郑州站,located in the administrative territorial entity,郑州
+中国铁路郑州局集团有限公司,item operated,郑州站
+海南,located in or next to body of water,琼州海峡
+琼州海峡,located in the administrative territorial entity,海南
+乌图布拉格镇,located in the administrative territorial entity,博乐市
+广昌,located in the administrative territorial entity,广昌县
+广昌,located in,广昌县
+钱毅,employer,国家粮食和物资储备局
+两河镇,located in the administrative territorial entity,当阳市
+2024年,point in time,2024年1月11日
+2023年,point in time,2023年1月11日
+新时代新征程,has cause,新时代党领导人民推进社会主义政治建设
+新时代党领导人民推进社会主义政治建设,part of,新时代新征程
+贤国与家,creator,习近平总书记
+中国式现代化,creator,习近平
+习近平,movement,中国式现代化
+中华人民共和国保守国家秘密法,country,中华人民共和国
+中国共产党,office held by head of the organization,中华人民共和国主席
+中央保密工作领导机构,country,中华人民共和国
+保险公司,field of work,保险
+第20号主席令,point in time,2024年2月27日
+第20号主席令,author,习近平
+中华人民共和国保守国家秘密法,publication date,2024年2月27日
+中华人民共和国保守国家秘密法,signatory,习近平
+中华人民共和国保守国家秘密法,main regulatory text,第20号主席令
+中华人民共和国保守国家秘密法,start time,2024年5月1日
+保密法,publication date,2024年2月27日
+保密法,signatory,习近平
+保密法,main regulatory text,第20号主席令
+保密法,start time,2024年5月1日
+复悦生活产业集团,item operated,复地活力城
+武安镇,located in the administrative territorial entity,南漳县
+中国电子信息产业发展研究院,chairperson,乔标
+乔标,member of,中国电子信息产业发展研究院
+乔标,member,中国电子信息产业发展研究院
+普安县,located in the administrative territorial entity,黔西南布依族苗族自治州
+宇宙线,subclass of,高能粒子
+质子,part of,宇宙线
+敦煌研究院,located in the administrative territorial entity,兰州
+国家知识产权局,office held by head of the organization,知识产权运用促进司司长
+内环,located in the administrative territorial entity,上海
+武安市,located in the administrative territorial entity,邯郸市
+康二城镇,located in the administrative territorial entity,武安市
+淑村镇,located in the administrative territorial entity,武安市
+稀释制冷机,subclass of,制冷机
+越南,diplomatic relation,新加坡
+马来西亚,diplomatic relation,柬埔寨
+新加坡,diplomatic relation,越南
+埃及贸易与工业部长,country,埃及
+萨米尔,position held,埃及贸易与工业部长
+萨米尔,country of citizenship,埃及
+石油,subclass of,化石燃料
+天然气,subclass of,化石燃料
+突尼斯,diplomatic relation,土耳其
+突尼斯,diplomatic relation,毛里塔尼亚
+苏塞,country,突尼斯
+毛里塔尼亚,diplomatic relation,突尼斯
+祖尔加提,country of citizenship,突尼斯
+扎伊娜卜·哈瓦·班古拉,country of citizenship,肯尼亚
+哈瓦那,continent,欧洲
+哈瓦那烟草公司,headquarters location,哈瓦那
+熟咖喱,country of origin,日本
+炸鸡,country of origin,日本
+中国人民保险与人民同行与健康相伴,owned by,中国人民健康保险股份有限公司
+2022年北京冬奥会,sports season of league or competition,北京冬奥会
+2022年北京冬奥会,sports season of league,北京冬奥会
+宋庄镇,located in the administrative territorial entity,通州区
+AG600M完成高寒试飞任务,instance of,鲲龙
+AG600M,instance of,鲲龙
+国家发展改革委,item operated,运主要用能产品设备保有量超过50亿台(套)
+智慧商店,subclass of,商场
+假日消费,subclass of,消费
+市场监管总局,subsidiary,市场监管部门
+肥西,located in the administrative territorial entity,安徽
+巢湖,located in the administrative territorial entity,安徽
+闽江,mouth of the watercourse,东海
+闽江,located in the administrative territorial entity,福州
+福州,located in or next to body of water,闽江
+绿皮火车,subclass of,火车
+春在田间,creator,何海霞
+百花亭,part of,公园
+比奥,country of citizenship,塞拉利昂
+埃博拉疫情,country,塞拉利昂
+新冠疫情,country,塞拉利昂
+比奥,position held,塞拉利昂总统
+全国纪检监察干部队伍教育整顿总结会议,follows,全国纪检监察干部队伍教育整顿总结报告
+全国纪检监察干部队伍教育整顿总结报告,author,习近平总书记
+中央纪委国家监委,part of,中央纪委
+斯海特,employer,世界自然基金会
+中华人民共和国国务院总理,subclass of,国家元首
+中塞关系,participant,塞拉利昂共和国总统
+中塞关系,participant,朱利叶斯·马达·比奥
+中美建交45周年招待会,country,美国
+赵建,position held,中国驻芝加哥总领事馆
+珍妮弗·弗里德利,position held,中国驻芝加哥总领事馆
+河北,located in the administrative territorial entity,中国
+中国共产党带领中国人民成功走出一条以人民为中心、实现文化繁荣、坚持环境友好、促进和平发展的现代化道路,country,中国
+中国,significant event,中国共产党带领中国人民成功走出一条以人民为中心、实现文化繁荣、坚持环境友好、促进和平发展的现代化道路
+拉利伯塔德码头,country,萨尔瓦多
+惠及拉利伯塔德省,located in the administrative territorial entity,萨尔瓦多
+萨首都地区,country,萨尔瓦多
+巴奈依,country of citizenship,科威特
+马席克,country of citizenship,奥地利
+塞拉利昂,head of state,比奥
+段旭如,country of citizenship,中国
+大凉山,located in the administrative territorial entity,四川
+交通运输部,field,交通运输
+威努特信息技术有限公司,headquarters location,天津
+威努特,headquarters location,天津
+崖城,located in the administrative territorial entity,海南
+抚远市人民法院,located in the administrative territorial entity,抚远市
+胡卫列,position held,司法部副部长
+洪泽湖湿地国家级自然保护区,located in the administrative territorial entity,泗洪县
+实体经济,subclass of,金融业
+新时代,follows,改革开放
+改革开放,facet of,实体经济
+大数据杀熟,facet of,打车软件
+崇义县,located in the administrative territorial entity,赣州
+兴业县,located in the administrative territorial entity,玉林
+奶茶,instance of,品牌
+清华大学,located in the administrative territorial entity,京津冀
+未来路街道,located in the administrative territorial entity,金水区
+二圣镇,located in the administrative territorial entity,巴南区
+云林天乡,located in the administrative territorial entity,巴南区
+习近平总书记,country of citizenship,新中国
+新中国,head of state,习近平总书记
+淄川区,located in the administrative territorial entity,淄博市
+双杨镇,located in the administrative territorial entity,淄川区
+张丹峰,employer,人民日报媒体技术公司
+恩格斯,movement,社会主义
+社会主义,discoverer or inventor,恩格斯
+六安,located in the administrative territorial entity,安徽省
+金安区,located in the administrative territorial entity,六安
+施桥镇,located in the administrative territorial entity,金安区
+陈斌开,educated at,中央财经大学
+江宁经济技术开发区,located in the administrative territorial entity,南京
+音乐剧,subclass of,舞台艺术
+明清故宫,heritage designation,世界遗产
+周口店北京人遗址,heritage designation,世界遗产
+承德避暑山庄,heritage designation,世界遗产
+北京皇家祭坛—天坛,heritage designation,世界遗产
+北京皇家园林—颐和园,heritage designation,世界遗产
+明清皇家陵寝,heritage designation,世界遗产
+大运河,heritage designation,世界遗产
+中国历史文化名城,heritage designation,世界遗产
+中国历史文化名城,heri,世界遗产
+李楠,position held,教育部科学技术与信息化司副司长
+中国科学院金属研究所,located in the administrative territorial entity,沈阳
+沈阳材料科学国家研究中心,located in the administrative territorial entity,沈阳
+音乐剧,subclass of,音乐
+周坡镇,located in the administrative territorial entity,井研县
+南昌局集团公司,item operated,南平市站
+东城,located in the administrative territorial entity,北京市
+西城,located in the administrative territorial entity,北京市
+金淘镇,located in the administrative territorial entity,南安市
+焦雅辉,employer,国家卫生健康委
+龙华区,located in the administrative territorial entity,海口
+十四届全国人大,part of,全国人民代表大会
+十四届全国人大常委会立法规划,facet of,十四届全国人大
+全国政协十四届常委会,start time,2023年10月31日
+长宁区,located in the administrative territorial entity,上海市
+虹桥街道,located in the administrative territorial entity,长宁区
+人大代表之家,occupant,人大代表
+扎龙湿地,located in the administrative territorial entity,黑龙江省
+上根子镇,located in the administrative territorial entity,高州市
+惊蛰,instance of,二十四节气
+湘鄂赣皖,located in or next to body of water,长江
+松阳县,located in the administrative territorial entity,丽水市
+安民乡,located in the administrative territorial entity,松阳县
+漳浦县,located in the administrative territorial entity,漳州市
+石榴镇,located in the administrative territorial entity,漳浦县
+中国气象局,field of work,能源气象服务
+北京冬奥会,participant,新秀
+北京冬奥会,participant,蔡雪桐
+北京冬奥会,participant,刘佳宇
+新秀,sport,冰雪运动
+蔡雪桐,sport,冰雪运动
+刘佳宇,sport,冰雪运动
+全国冬运会,sport,冰雪运动
+2024年全国室内田径大奖赛,point in time,2024年
+2024年全国室内田径大奖赛,instance of,全国室内田径大奖赛
+李俊霖,sport,田径
+2021年陕西全运会,point in time,2021年
+刘德助,sport,田径
+马忠强,sport,田径
+陶沛林,sport,田径
+苏炳添,sport,田径
+宁县,located in the administrative territorial entity,庆阳市
+良平镇,located in the administrative territorial entity,宁县
+仰光,country,缅甸
+曼德勒,country,缅甸
+仰光—曼德勒高速公路,country,缅甸
+会展中心,country,西班牙
+会展中心,located in the administrative territorial entity,巴塞罗那
+联想集团,country,西班牙
+奥兰多市,country,美国
+韩国中央银行,subsidiary,韩国银行
+韩国银行,part of,韩国中央银行
+悉尼,located in the administrative territorial entity,维多利亚州
+维多利亚州,located in the administrative territorial entity,澳大利亚
+澳大利亚气象局,country,澳大利亚
+难忘的战斗,cast member,达式常
+人到中年,cast member,达式常
+人到中年,cast member,达
+桂梅老师,instance of,话剧
+习近平新时代中国特色社会主义思想,author,习主席
+习主席,notable work,习近平新时代中国特色社会主义思想
+鲁道夫·萨德,country of citizenship,法国
+芙蓉区,located in the administrative territorial entity,长沙
+2023年中国经济,point in time,2023年
+2023年经济,point in time,2023年
+马克思主义民族理论,subclass of,马克思主义
+中国国家铁路集团有限公司,chief executive officer,刘振芳
+刘振芳,employer,中国国家铁路集团有限公司
+艾奥瓦州,country,美国
+马斯卡廷中学,country,美国
+哈利法港二期集装箱码头,country,阿联酋
+哈利法港二期集装箱码头,country,中国
+迪拜光热光伏复合项目,country,阿联酋
+迪拜光热光伏复合项目,country,中国
+阿联酋联邦铁路二期项目,country,中国
+萨尔瓦多,part of,中美洲
+萨尔瓦多,member of,亚洲基础设施投资银行
+亚洲基础设施投资银行,country,萨尔瓦多
+上海合作组织,founded by,哈萨克斯坦
+第七届中国国际进口博览会,organizer,中国国际进口博览局
+南宁南站,located in the administrative territorial entity,南宁
+越南,member of,东盟
+安员站,country,越南
+哈,capital,阿斯塔纳
+阿斯塔纳,country,哈
+托卡耶夫,position held,哈总统
+中吉合资汽车总装厂,country,吉尔吉斯斯坦
+中吉合资汽车总装厂,located in the administrative territorial entity,比什凯克
+国立亚洲艺术博物馆,country,美国
+塞拉利昂,capital,弗里敦
+弗里敦,country,塞拉利昂
+弗里敦行政综合大楼,country,塞拉利昂
+弗里敦行政综合大楼,located in the administrative territorial entity,弗里敦
+邢慧娜,employer,国务院新闻办公室
+邢慧娜,employer,国务院新闻办
+辛国斌,employer,国务院新闻办公室
+辛国斌,employer,国务院新闻办
+雁栖湖,located in the administrative territorial entity,北京市
+中国科学院大气物理研究所,located in the administrative territorial entity,北京市
+自然资源部,subsidiary,自然资源所有者权益司
+自然资源所有者权益司,part of,自然资源部
+中国载人航天工程办公室,part of,中国载人航天工程
+中国载人航天工程,subsidiary,中国载人航天工程办公室
+中国载人航天工程,item operated,载人月球探测工程
+中国载人航天工程,item operated,长征十号运载火箭
+中国载人航天工程,item operated,梦舟载人飞船
+中国载人航天工程,item operated,揽月月面着陆器
+中国载人航天工程,item operated,文昌发射场
+载人月球探测工程,organizer,中国载人航天工程
+梦舟载人飞船,manufacturer,中国载人航天工程
+揽月月面着陆器,manufacturer,中国载人航天工程
+文昌发射场,owned by,中国载人航天工程
+横琴粤澳深度合作区,located in the administrative territorial entity,澳门特别行政区
+横琴粤澳深度合作区,country,中华人民共和国
+澳门特别行政区,diplomatic relation,中华人民共和国
+中华人民共和国,diplomatic relation,澳门特别行政区
+横琴大桥“二线”通道海关监管区,country,中华人民共和国
+新华社记者,country,中华人民共和国
+中央银行,part of,中央银行制度
+晓明楼,located in the administrative territorial entity,沛县
+高速铁路,subclass of,交通
+高速公路,subclass of,交通
+乌东德,located on terrain feature,长江
+发展粮食加工业,subclass of,粮食主产区
+普洱,located in the administrative territorial entity,云南
+阿拉山口市,located in the administrative territorial entity,新疆维吾尔自治区
+两岸交流合作,part of,两岸关系
+江苏,instance of,省份
+上海“五个中心”建设,located in the administrative territorial entity,上海
+上海东方枢纽国际商务合作区,located in the administrative territorial entity,上海
+翠屏区,located in the administrative territorial entity,宜宾市
+思坡镇,located in the administrative territorial entity,翠屏区
+海南500千伏主网架工程,located in the administrative territorial entity,海口
+椰城输变电工程,part of,海南500千伏主网架工程
+昌化输变电工程,part of,海南500千伏主网架工程
+三亚输变电工程,part of,海南500千伏主网架工程
+昌江核电二期接入系统工程,part of,海南500千伏主网架工程
+昌江,located in the administrative territorial entity,海南
+山西省委,part of,中共中央
+中国共产党纪律处分条例,publisher,中共中央
+重庆海螺水泥有限责任公司,headquarters location,重庆市
+高质量发展,different from,经济转型升级
+经济转型升级,different from,高质量发展
+应急管理,part of,治理能力
+共建“一带一路”倡议,facet of,共建“一带一路”国际合作高峰论坛
+共建“一带一路”国际合作高峰论坛,facet of,共建“一带一路”倡议
+共建“一带一路”国际合作,facet of,共建“一带一路”倡议
+共建“一带一路”,facet of,共建“一带一路”倡议
+香港特别行政区,diplomatic relation,台湾省
+澳门特别行政区,diplomatic relation,台湾省
+台湾省,diplomatic relation,香港特别行政区
+台湾省,diplomatic relation,澳门特别行政区
+华岩镇,located in the administrative territorial entity,九龙坡区
+雷诺,country,中国
+达契亚,country,中国
+路西德,country,中国
+北西奈省,located in the administrative territorial entity,埃及
+新能源,subclass of,能源
+舒尤克·道马什,position held,匈牙利总统
+让—克里斯托夫·巴斯,position held,中国驻法国大使馆临时代办
+中华人民共和国农业技术推广法,instance of,法律
+帕巴拉·格列朗杰,position held,全国政协副主席
+梁振英,position held,全国政协副主席
+苏辉,position held,全国政协
+明园森林公园,located in the administrative territorial entity,静安区
+中国人民政治协商会议第十四届全国委员会常务委员会,inception,2024年3月4日
+李文龙,position held,全国人大代表
+复兴号,different from,复兴号
+文物和文化遗产,subclass of,文物
+拜登总统,significant event,旧金山会晤
+旧金山会晤,participant,拜登总统
+友谊隧道,country,老挝
+友谊隧道,carries,中老铁路
+磨丁站,country,老挝
+磨丁站,connecting line,中老铁路
+磨憨站,connecting line,中老铁路
+里戈,country of citizenship,印度尼西亚
+刘韵洁,member of,中国工程院
+科创园区,located in the administrative territorial entity,天津
+上海中医药大学,located in the administrative territorial entity,上海市
+苏尼特左旗,located in the administrative territorial entity,锡林郭勒盟
+达来苏木,located in the administrative territorial entity,苏尼特左旗
+中国人民银行副行长,appointed by,中国人民银行
+支付宝,instance of,移动支付
+刑法修正案(十二),publication date,2024年3月1日
+2023年学雷锋纪念日,point in time,2023年
+武夷山,located in or next to body of water,九曲溪
+武夷山市,located in or next to body of water,九曲溪
+陈敏,position held,水利部副部长
+袁达,position held,水利部副部长
+郝明金,position held,中央社院院长
+习近平总书记,position held,全国人大常委会副委员长
+习近平总书记,position held,中央社院院长
+中国科学十大进展,conferred by,国家自然科学基金委员会
+宣汉,located in the administrative territorial entity,达州市
+中国军号,owned by,解放军新闻传播中心
+丽江和平遥,heritage designation,世界遗产名录
+明月,part of,农历
+正月,part of,夏历
+元正,part of,夏历
+贵州省博物馆,located in the administrative territorial entity,贵州
+东亭民宿,located in the administrative territorial entity,盐城
+榆树,subclass of,树
+槐树,subclass of,树
+立春东风回暖早,part of,春
+雪,part of,冬天
+<unk>音,part of,立春东风回暖早
+李耕,field of work,中国画
+藕,natural product of taxon,藕族
+藕,natural product of tax,藕族
+中国天眼,part of,国家天文台
+传化合成材料,headquarters location,浙江
+王东峰,ethnic group,回族
+汤洪波,astronaut mission,神舟十七号
+唐胜杰,astronaut mission,神舟十七号
+江新林,astronaut mission,神舟十七号
+高质量发展,creator,习近平同志
+中国共产党,political ideology,中国式现代化
+王希孟,occupation,画家
+柳林县,located in the administrative territorial entity,吕梁市
+薛村镇,located in the administrative territorial entity,柳林县
+安徽,shares border with,江苏
+石首市,located in the administrative territorial entity,湖北省
+终身学习,subclass of,职业教育
+雪域高原,elevation above sea level,5100
+李东红,military branch,武警
+王顺风,educated at,国防大学
+花鸟画,instance of,画科
+人物画,instance of,画科
+山水画,instance of,画科
+柳河县,located in the administrative territorial entity,通化市
+热辣滚烫,instance of,国产电影
+飞驰人生2,instance of,国产电影
+第二十条,instance of,国产电影
+普洱市,located in the administrative territorial entity,云南
+宁洱哈尼族彝族自治县,located in the administrative territorial entity,普洱市
+宁洱县,located in the administrative territorial entity,普洱市
+全国两会,located in the administrative territorial entity,北京
+习近平主席,significant event,全国两会
+夏巴兹·谢里夫,position held,巴基斯坦伊斯兰共和国总理
+<unk>邑区,located in the administrative territorial entity,西安
+石井街道,located in the administrative territorial entity,<unk>邑区
+政协全国委员会常务委员会,part of,政协全国委员会
+永济市,located in the administrative territorial entity,山西
+雄安新区,country,中华人民共和国
+粤港澳大湾区,country,中华人民共和国
+深中通道,country,中华人民共和国
+宁波,country,中华人民共和国
+舟山港,country,中华人民共和国
+梅山港区,country,中华人民共和国
+全国政协十四届一次会议,follows,全国政协十四届二次会议
+习近平总书记,position held,全国妇联主席
+十四届全国人大二次会议,part of,十四届全国人大
+阿布扎比部长宣言,country,阿联酋
+观察中国全国两会,part of,中国全国两会
+玛多县,located in the administrative territorial entity,果洛藏族自治州
+花石峡镇,located in the administrative territorial entity,玛多县
+吴代赦,position held,全国政协委员
+苏尼特左旗,located in the administrative territorial entity,内蒙古自治区
+社会主义现代化,part of,新时代
+新能源汽车,subclass of,科技
+2023年国民经济和社会发展统计公报,publisher,国家统计局
+张锁江,educated at,河南大学
+个旧市,located in the administrative territorial entity,云南省
+物质富足、精神富有,part of,社会主义现代化
+南水北调,country,中国
+杨光斌委员,educated at,中国人民大学
+经开区,located in the administrative territorial entity,武汉市
+海信集团控股股份有限公司,founded by,贾少谦代表
+集装箱码头,subclass of,码头
+全国人大代表,different from,全国政协委员
+全国政协委员,different from,全国人大代表
+全国两会,participant,全国人大代表
+全国两会,participant,全国政协委员
+龙腾虎跃,position held,全国人大代表
+龙腾虎跃,position held,全国政协委员
+鱼跃龙门,position held,全国人大代表
+鱼跃龙门,position held,全国政协委员
+金山,located in the administrative territorial entity,贵州省
+银山,located in the administrative territorial entity,贵州省
+高质量发展,part of,马克思主义
+风物长宜放眼量,presenter,习近平总书记
+孙秀艳,employer,国家医保局
+红棉,located in the administrative territorial entity,广州市
+国家林业和草原局,subsidiary,国家林草局
+蓉江新区,located in the administrative territorial entity,赣州市
+沈跃跃,position held,全国政协主席
+周强,position held,全国政协主席
+帕巴拉·格列朗杰,position held,全国政协主席
+梁振英,position held,全国政协主席
+巴特尔,position held,全国政协主席
+苏辉,position held,全国政协主席
+邵鸿,position held,全国政协主席
+高云龙,position held,全国政协主席
+陈武,position held,全国政协主席
+十四届全国人大二次会议,location,人民大会堂
+刘奇,position held,全国人大常委会委员长
+刘俊臣,position held,全国人大常委会委员长
+信春鹰,position held,全国人大常委会委员长
+娄勤俭,position,全国人大常委会委员长
+娄勤俭,position held,全国人大常委会委员长
+孔绍逊,position held,全国人大常委会委员长
+刘建波,position held,全国人大常委会委员长
+十四届全国人大二次会议,part of,全国人大常委会
+十四届全国人大二次会议,country,中华人民共和国
+娄勤俭,country of citizenship,中华人民共和国
+中华人民共和国,legislative body,全国人民代表大会
+全国人民代表大会,country,中华人民共和国
+十四届全国人大及其常委会,country,中华人民共和国
+雪克来提·扎克尔,ethnic group,维吾尔族
+万立骏,relative,习近平
+习近平,relative,万立骏
+习近平,child,马兴瑞
+习近平,child,马逢国
+马兴瑞,relative,习近平
+马逢国,relative,习近平
+王东明,relative,习近平
+王宁,relative,习近平
+王刚,relative,习近平
+王志民,relative,习近平
+王希勤,relative,习近平
+王君正,relative,习近平
+王炯,relative,习近平
+王莉霞,relative,习近平
+王晓晖,relative,习近平
+王蒙徽,relative,习近平
+王巍,relative,习近平
+水庆霞,relative,习近平
+巴音朝鲁,relative,习近平
+艾尔肯·吐尼亚孜,relative,习近平
+娄勤俭,child,刘建波
+奋进正当时,follows,人勤春来早
+2024年国民经济和社会发展计划草案,follows,2023年国民经济和社会发展计划执行情况与2024年国民经济和社会发展计划草案的报告
+2024年中央和地方预算执行情况与2024年中央和地方预算草案的报告,follows,2023年国民经济和社会发展计划执行情况与2024年国民经济和社会发展计划草案的报告
+2024年中央和地方预算草案,follows,2023年国民经济和社会发展计划执行情况与2024年国民经济和社会发展计划草案的报告
+中国石油塔里木油田深地塔科1井,located in the administrative territorial entity,新疆
+塔里木盆地,located in the administrative territorial entity,新疆
+2019年全国两会,instance of,全国两会
+王沪宁,member of,全国政协常委会
+全国政协十四届二次会议,chairperson,王沪宁
+全国政协常委会,office held by head of the organization,全国政协主席
+习近平法治思想研究与实践,publisher,中国法学会
+政协第十四届全国委员会第二次会议,follows,政协第十四届全国委员会第二次会议
+高云龙,position,全国政协副主席
+丹·斯泰恩博克,country of citizenship,美国
+管仲,member of political party,中国共产党
+加卢津,position held,俄罗斯副外长
+中俄关系,office held by head of government,俄罗斯副外长
+伊比乌纳市,country,巴西
+伊比乌纳市,located in the administrative territorial entity,圣保罗州
+大瓦尔任—保利斯塔市,country,巴西
+大瓦尔任—保利斯塔市,located in the administrative territorial entity,圣保罗州
+圣诺伦索供水系统,country,巴西
+圣诺伦索供水系统,located in the administrative territorial entity,圣保罗州
+蒙古国,office held by head of government,蒙古国总理
+蒙古国总理,country,蒙古国
+内蒙古自治区,located in the administrative territorial entity,蒙古国
+雅万高铁,date of official opening,2023年10月17日
+塔兰塔体育城项目,country,肯尼亚
+塔兰塔体育城项目,located in the administrative territorial entity,内罗毕
+肯尼亚,office held by head of government,肯尼亚总统
+肯尼亚总统,country,肯尼亚
+习近平,movement,高质量发展
+黄勇平,educated at,上海交通大学
+安庭委员,position held,民建北京市委副主委
+十四届全国人大二次会议,part of,全国人大
+尤政代表,member of,中国工程院
+尤政代表,educated at,华中科技大学
+高子程代表,member of,中国工程院
+高子程代表,educated at,华中科技大学
+湖南师范大学,chairperson,谢资清
+谢资清,educated at,湖南师范大学
+中国建设银行,owned by,中国人民银行
+勤俭节约,subclass of,节约
+交通银行,instance of,国有大行
+巴布亚新几内亚,diplomatic relation,乌兹别克斯坦
+乌兹别克斯坦,diplomatic relation,巴布亚新几内亚
+赞克尔迪,country,乌兹别克斯坦
+经楼镇,located in the administrative territorial entity,樟树市
+两会大幕,part of,两会
+两会,significant event,两会大幕
+蔡牛镇,located in the administrative territorial entity,铁岭县
+贾家口镇,located in the administrative territorial entity,宁晋县
+洋河股份,chief executive officer,张联东
+中国出口信用保险公司,chief executive officer,宋曙光
+扬子江药业集团有限公司,instance of,企业
+艾灸,part of,中医药
+革命老区,located in the administrative territorial entity,江西
+赣州瑞金机场,place served by transport hub,瑞金
+徐礼华,educated at,武汉大学
+京东集团,industry,数字经济
+新征程,creator,习近平
+启阳汽车集团,headquarters location,四川
+吴为山委员,member of political party,民盟
+人民民主,subclass of,民主
+人民民主,sub,民主
+黔南,located in the administrative territorial entity,贵州省
+十四届全国人大二次会议,part of,全国两会
+十四届全国人大二次会议,location,北京人民大会堂
+杏花岭区,located in the administrative territorial entity,太原市
+赵长龙,country of citizenship,中华人民共和国
+邮储银行北京分行,instance of,邮政储蓄银行
+蒲江县,located in the administrative territorial entity,成都市
+江苏,capital,苏州
+节约粮食,sub,节约
+长江文化,subclass of,文化
+新街口街道,located in the administrative territorial entity,西城区
+宇通,instance of,客服热线
+金篆GoldenDB,instance of,分布式数据库
+第十四届全国人民代表大会,applies to jurisdiction,中华人民共和国
+北京人民大会堂,country,中华人民共和国
+李鸿忠,country of citizenship,中华人民共和国
+王东明,country of citizenship,中华人民共和国
+肖捷,country of citizenship,中华人民共和国
+郑建邦,country of citizenship,中华人民共和国
+丁仲礼,country of citizenship,中华人民共和国
+郝明金,country of citizenship,中华人民共和国
+蔡达峰,country of citizenship,中华人民共和国
+何维,country of citizenship,中华人民共和国
+武维华,country of citizenship,中华人民共和国
+铁凝,country of citizenship,中华人民共和国
+彭清华,country of citizenship,中华人民共和国
+张庆伟,country of citizenship,中华人民共和国
+雪克来提·扎克尔,country of,中华人民共和国
+无锡市,located in the administrative territorial entity,江苏
+崔铁军,educated at,东南大学
+十四届全国人大二次会议,participant,习近平
+十四届全国人大二次会议,participant,李强
+十四届全国人大二次会议,participant,王沪宁
+十四届全国人大二次会议,participant,蔡奇
+十四届全国人大二次会议,participant,丁薛祥
+十四届全国人大二次会议,participant,李希
+十四届全国人大二次会议,participant,韩正和
+十四届全国人大二次会议,participant,赵乐际
+十四届全国人大二次会议,participant,习近平同志
+王沪宁,position held,国务院总理
+蔡奇,position held,国务院总理
+丁薛祥,position held,国务院总理
+李希,position held,国务院总理
+韩正和,position held,国务院总理
+赵乐际,position held,国务院总理
+中华人民共和国第十四届全国人民代表大会第二次会议,follows,十四届全国人大二次会议
+中华人民共和国第十四届全国人民代表大会第二次会议,location,北京人民大会堂
+中华人民共和国第十四届全国人民代表大会第二次会议,participant,习近平
+中华人民共和国第十四届全国人民代表大会第二次会议,participant,王沪宁
+政府工作报告,author,李强
+苏永忠,position held,国务院总理
+徐安策,position held,国务院总理
+李文辉,position held,国务院总理
+习近平同志,position held,全国人大常委会委员长
+政府工作报告,author,丁薛祥
+罗珊珊,member of,国务院新闻办
+政府工作报告,author,罗珊珊
+黄守宏,member of,国务院新闻办
+十四届全国人大二次会议,point in time,2023年
+马兴瑞,position held,中共中央政治局委员
+石泰峰,position held,中共中央政治局委员
+陈吉宁,position held,中共中央政治局委员
+陈敏尔,position held,中共中央政治局委员
+黄坤明,position held,中共中央政治局委员
+刘金国,position held,中共中央政治局委员
+王小洪,position held,中共中央政治局委员
+邵鸿,position held,全国政协副主席
+蒋作君,position held,全国政协副主席
+杨震,position held,全国政协副主席
+国务院组织法,instance of,法律
+中华人民共和国国务院,instance,国务院
+中国铁路沈阳局集团有限公司,item operated,沈阳站
+沈阳站,owned by,中国铁路沈阳局集团有限公司
+元宝山区,located in the administrative territorial entity,赤峰市
+于振江,located in the administrative territorial entity,黑龙江省
+嫩江市,located in the administrative territorial entity,黑龙江省
+新华社北京3月5日电,located in the administrative territorial entity,北京
+学雷锋纪念日,commemorates,雷锋精神
+全国文明实践巾帼志愿阳光站,field of work,巾帼志愿服务
+2024年春运,number of participants,40
+沈鼓集团股份有限公司,headquarters location,沈阳市
+发展新质生产力,part of,高质量发展
+河西镇,located in the administrative territorial entity,高平市
+寺庄镇,located in the administrative territorial entity,高平市
+科学技术部,headquarters location,人民大会堂
+阴和俊,member of,科学技术部
+水利部,headquarters location,人民大会堂
+李国英,member of,科学技术部
+唐仁健,member of,科学技术部
+张玉卓,member of,科学技术部
+新能源汽车,subclass of,清洁能源
+氢能,subclass of,清洁能源
+舒晓刚,employer,华中科技大学同济医学院
+吴兴,located in the administrative territorial entity,湖州市
+雷锋,movement,社会主义核心价值观
+雷锋精神,named after,雷锋
+中船集团,headquarters location,潍柴
+潍柴,located in the administrative territorial entity,山东
+中国(山东)自由贸易试验区,located in the administrative territorial entity,山东
+科教强区,located in the administrative territorial entity,山东
+中国的 世界的 五粮液,based on,五粮液
+微众银行,industry,金融
+新中国,head of government,习近平总书记
+新中国,head of government,总书记
+新中国,head of,总书记
+南京市博物总馆,located in the administrative territorial entity,南京
+杨毅周,position held,全国台联副会长
+夏先鹏,member of political party,民革
+赵宇亮,employer,中国科学院
+十四届全国人大二次会议江苏代表团审议,part of,全国两会
+政府工作报告,part of,全国两会
+王毅,member of political party,中共中央
+咸辉,position held,全国政协副主席
+解放军和武警部队代表团,part of,十四届全国人大二次会议
+政府工作报告,part of,十四届全国人大二次会议
+蓝佛安,member of,国家发展和改革委员会
+王文涛,member of,国家发展和改革委员会
+奥列格·季莫费耶夫,educated at,俄罗斯人民友谊大学
+宋蓬,member of political party,老挝人民革命党
+美国商会,chairperson,克拉克
+克拉克,member of,美国商会
+卢富马,position held,赞比亚国防部长
+十四届全国人大二次会议,participant,习近平总书记
+科大讯飞,industry,人工智能
+严纯华,educated at,兰州大学
+韩保江,educated at,中央党校
+马珺委员,educated at,洛阳理工学院
+金李委员,educated at,南方科技大学
+人工智能,part of,大数据
+王永澄,member of political party,中国残联
+新吴区,located in the administrative territorial entity,无锡市
+滨海城市,part of,长三角
+丁世忠委员,position held,全国工商联副主席
+香山街道,located in the administrative territorial entity,北京
+长安汽车股份有限公司,headquarters location,重庆
+长安汽车,headquarters location,重庆
+中国农业银行,subsidiary,国家粮食安全大局
+春风浩荡,part of,社会主义现代化
+施华君,employer,中国电子科技集团公司
+程学源,member of political party,中国共产党
+京津冀协同发展,located in the administrative territorial entity,天津市
+<unk>阳市,located in the administrative territorial entity,郑州市
+高山镇,located in the administrative territorial entity,<unk>阳市
+高山村,located in the administrative territorial entity,高山镇
+孝感市,located in the administrative territorial entity,烟台
+孝南区,located in the administrative territorial entity,孝感市

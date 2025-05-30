@@ -1,3 +1,4 @@
+accelerate==1.7.0
 aiofiles==24.1.0
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.4
@@ -33,6 +34,7 @@ defusedxml==0.7.1
 dill==0.3.8
 exceptiongroup==1.2.2
 executing==2.2.0
+faiss-cpu==1.11.0
 fastapi==0.115.12
 ffmpy==0.5.0
 filelock==3.18.0
@@ -154,6 +156,7 @@ Scrapy==2.13.1
 seaborn==0.13.2
 selenium==4.33.0
 semantic-version==2.10.0
+sentence-transformers==4.1.0
 sentencepiece==0.2.0
 service-identity==24.2.0
 shellingham==1.5.4

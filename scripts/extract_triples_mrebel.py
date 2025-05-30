@@ -55,7 +55,7 @@ out_dir = 'kg/triples'
 os.makedirs(out_dir, exist_ok=True)
 
 # 每个文件存储的最大三元组数
-MAX_TRIPLES_PER_FILE = 10000
+MAX_TRIPLES_PER_FILE = 1000
 
 def write_triples_to_file(triples, file_idx):
     """将三元组写入指定文件"""
@@ -67,8 +67,12 @@ def write_triples_to_file(triples, file_idx):
             writer.writerow([h, r, t])
     return out_file
 
-# 收集所有三元组
-all_triples = []
+# 初始化计数器
+current_file_idx = 0
+current_triples = []
+# 新增：全局三元组去重集合
+seen_triples = set()
+
 files = glob.glob(os.path.join(corpus_dir, '*.json'))
 for file in tqdm(files, desc="处理文件"):
     try:
@@ -89,11 +93,17 @@ for file in tqdm(files, desc="处理文件"):
                         )
                         decoded = tokenizer.batch_decode(outputs, skip_special_tokens=False)
                         triples = extract_triplets_typed(decoded[0])
-                        '''print(f"\n从文件 {file} 提取的三元组:")
-                        print(f"三元组数量: {len(triples)}")
-                        for h, r, t in triples:
-                            print(f"头实体: {h} | 关系: {r} | 尾实体: {t}")'''
-                        all_triples.extend(triples)
+                        # 去重：只添加未出现过的三元组
+                        for triple in triples:
+                            if triple not in seen_triples:
+                                current_triples.append(triple)
+                                seen_triples.add(triple)
+                        # 检查是否需要写入文件
+                        if len(current_triples) >= MAX_TRIPLES_PER_FILE:
+                            out_file = write_triples_to_file(current_triples, current_file_idx)
+                            print(f'已保存第 {current_file_idx+1} 批三元组到 {out_file}')
+                            current_triples = []
+                            current_file_idx += 1
             # 处理文档列表
             elif isinstance(data, list):
                 for doc in data:
@@ -110,22 +120,24 @@ for file in tqdm(files, desc="处理文件"):
                             )
                             decoded = tokenizer.batch_decode(outputs, skip_special_tokens=False)
                             triples = extract_triplets_typed(decoded[0])
-                            print(f"\n从文件 {file} 提取的三元组:")
-                            print(f"三元组数量: {len(triples)}")
-                            for h, r, t in triples:
-                                print(f"头实体: {h} | 关系: {r} | 尾实体: {t}")
-                            all_triples.extend(triples)
+                            # 去重：只添加未出现过的三元组
+                            for triple in triples:
+                                if triple not in seen_triples:
+                                    current_triples.append(triple)
+                                    seen_triples.add(triple)
+                            # 检查是否需要写入文件
+                            if len(current_triples) >= MAX_TRIPLES_PER_FILE:
+                                out_file = write_triples_to_file(current_triples, current_file_idx)
+                                print(f'已保存第 {current_file_idx+1} 批三元组到 {out_file}')
+                                current_triples = []
+                                current_file_idx += 1
     except Exception as e:
         print(f"处理文件 {file} 时出错: {str(e)}")
         continue
 
-# 将三元组分批写入文件
-total_files = math.ceil(len(all_triples) / MAX_TRIPLES_PER_FILE)
-for i in range(total_files):
-    start_idx = i * MAX_TRIPLES_PER_FILE
-    end_idx = min((i + 1) * MAX_TRIPLES_PER_FILE, len(all_triples))
-    batch_triples = all_triples[start_idx:end_idx]
-    out_file = write_triples_to_file(batch_triples, i)
-    print(f'已保存第 {i+1}/{total_files} 批三元组到 {out_file}')
+# 写入剩余的三元组
+if current_triples:
+    out_file = write_triples_to_file(current_triples, current_file_idx)
+    print(f'已保存最后一批三元组到 {out_file}')
 
 print(f'所有三元组已分批保存到 {out_dir} 目录')

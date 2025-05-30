@@ -7,6 +7,19 @@ from sentence_transformers import SentenceTransformer
 import torch
 import re
 
+'''
+openai的API有点贵，还容易超token
+直接改用Qwen3-0.6B本地部署
+'''
+
+# Use a pipeline as a high-level helper
+from transformers import pipeline
+
+pipe = pipeline("text-generation", model="Qwen/Qwen3-0.6B")
+messages = [
+    {"role": "user", "content": "Who are you?"},
+]
+pipe(messages)
 
 # 加载配置
 with open('config.yaml', 'r') as f:
