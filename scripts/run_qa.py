@@ -20,8 +20,8 @@ def evaluate(queries: list):
     queries: List[str] 输入查询列表
     Return: List[str] 输出答案列表
     """
-    # 初始化Qwen3-4B pipeline
-    qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-4B")
+    # 初始化Qwen2.5-7B-Instruct pipeline
+    #qwen_pipe = pipeline("text-generation", model="Qwen/Qwen2.5-7B-Instruct")
 
     # 加载配置
     with open('config.yaml', 'r') as f:

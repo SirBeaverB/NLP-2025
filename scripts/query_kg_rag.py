@@ -9,17 +9,22 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import openai
 from utils_kg import KGUtils
 import gc
+import dashscope
 
 '''
 openai的API有点贵，还容易超token，只用做关键词提取
-直接改用Qwen3-4B本地部署
+直接改用Qwen2.5-7B本地部署
 '''
+dashscope.api_key = os.getenv('DASHSCOPE_API_KEY')
+dashscope.base_url = 'https://toollearning.cn/v1/'
+
+print("当前API-KEY:", os.getenv('DASHSCOPE_API_KEY'))
 
 # Load model directly
 from transformers import pipeline
 
-# 初始化Qwen3-4B pipeline
-qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-4B")
+# 初始化Qwen2.5-7B pipeline
+qwen_pipe = pipeline("text-generation", model="Qwen/Qwen2.5-7B-Instruct")
 
 # 加载配置
 with open('config.yaml', 'r') as f:
@@ -53,37 +58,29 @@ with open(INDEX_PATH + '.meta', 'r', encoding='utf-8') as f:
 with open('prompts/base_prompt.txt', 'r', encoding='utf-8') as f:
     base_prompt = f.read()
 
-llm_model_name = "Qwen/Qwen3-4B"  # 或 "Qwen/Qwen3-4B"
-llm_tokenizer = AutoTokenizer.from_pretrained(llm_model_name)
-llm_model = AutoModelForCausalLM.from_pretrained(
-    llm_model_name,
-    torch_dtype="auto",
-    device_map="auto"
-)
+# 使用dashscope API调用Qwen2.5-7B
+llm_model_name = "qwen2.5-7b-instruct"
 
 # 加载知识图谱
 kg_path = 'kg/kg.pkl'
 kg_utils = KGUtils(kg_path)
 
-def qwen_chat(messages, max_new_tokens=2048):
-    text = llm_tokenizer.apply_chat_template(
-        messages,
-        tokenize=False,
-        add_generation_prompt=True,
-        enable_thinking=True
+def qwen_api_chat(prompt, model='qwen-turbo', max_tokens=2048):
+    response = dashscope.Generation.call(
+        model=model,
+        prompt=prompt,
+        max_tokens=max_tokens
     )
-    model_inputs = llm_tokenizer([text], return_tensors="pt").to(llm_model.device)
-    generated_ids = llm_model.generate(
-        **model_inputs,
-        max_new_tokens=max_new_tokens
-    )
-    output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
-    try:
-        index = len(output_ids) - output_ids[::-1].index(151668)
-    except ValueError:
-        index = 0
-    content = llm_tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
-    return content
+    print("DashScope raw response:", response)
+    if hasattr(response, 'output') and hasattr(response.output, 'text'):
+        return response.output.text.strip()
+    elif isinstance(response, dict) and 'output' in response and 'text' in response['output']:
+        return response['output']['text'].strip()
+    else:
+        return str(response)
+
+def ask_qwen3(prompt, model='qwen-turbo'):
+    return qwen_api_chat(prompt, model=model)
 
 def simple_keyword_search(corpus, keywords, top_k=5):
     print("用于关键词检索的关键词:", keywords)
@@ -160,16 +157,11 @@ def get_qwen_generated_text(result):
         return str(gen).strip()
 
 
-def ask_qwen3(prompt):
-    messages = [{"role": "user", "content": prompt}]
-    return qwen_chat(messages)
-
-
 def extract_keywords_with_llm(question, max=1):
     client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     prompt = (
         f"请从下面的问题中提取最关键的{max}个用于检索的关键词或短语，能少就少，注意不要有过多定语，但是也不要拆开专有名词，比如用书名号、引号括起来的书名、会议名等，你想通过搜索这个关键词找到相关内容。"
-        "eg 获得第二十七届“中国青年五四奖章”的女性有谁？ 关键词：中国青年五四奖章"
+        "eg 获得第二十七届中国青年五四奖章的女性有谁？ 关键词：中国青年五四奖章"
         "eg 《习近平新时代中国特色社会主义思想专题摘编》民族文字版共有几个出版社参与发行？ 关键词：《习近平新时代中国特色社会主义思想专题摘编》"
         "此外，请判断该问题是否为开放题（即答案不是唯一事实、需要主观判断或综合分析），如果是开放题请输出True，否则输出False。"
         "输出格式严格如下：\n关键词：xxx,yyy\n开放题：True/False\n"
@@ -223,7 +215,7 @@ def summarize_kg_rag(kg_answer, rag_answer, question):
         "请综合两部分信息，优先使用更rag所给出的更权威、直接的内容，必要时可融合推理。若信息不足请直接回复信息不足。"
     )
     messages = [{"role": "user", "content": prompt}]
-    return qwen_chat(messages)
+    return qwen_api_chat(prompt)
 
 def open_question_agent(kg_answer, rag_docs, question, keywords):
     # 拼接KG和RAG内容
@@ -253,8 +245,8 @@ def main():
             break
         # 先用 LLM agent 提取关键词
         keywords, is_open = extract_keywords_with_llm(question)
-        #print("LLM提取的关键词:", keywords)
-        #print("是否为开放题:", is_open)
+        print("LLM提取的关键词:", keywords)
+        print("是否为开放题:", is_open)
         if not is_open:
             # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
             kg_answer, kg_entity = answer_with_kg(question, keywords)
@@ -268,12 +260,12 @@ def main():
                 prompt = build_prompt(contexts, question, keywords)
                 rag_answer = ask_qwen3(prompt)
                 rag_urls = [doc.get('url', '') for doc in contexts if doc.get('url')]
-            #print("\n【RAG答案】\n" + rag_answer + "\n")
-            #print("\n【汇总】")
-            #print("KG答案：" + kg_answer)
-            #print("RAG答案：" + rag_answer)
+            print("\n【RAG答案】\n" + rag_answer + "\n")
+            print("\n【汇总】")
+            print("KG答案：" + kg_answer)
+            print("RAG答案：" + rag_answer)
             if rag_urls:
-                #print("RAG参考链接：" + ', '.join(rag_urls))
+                print("RAG参考链接：" + ', '.join(rag_urls))
                 # reread: 重新读取参考链接对应的文章内容
                 reread_contexts = []
                 for url in rag_urls:
@@ -287,20 +279,20 @@ def main():
                     print("\n【Reread最终答案】\n" + reread_answer + "\n")
             fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
             print(fusion_answer)
-            #print("参考链接：" + ', '.join(rag_urls))
-            #print("\n-----------------------------\n")
+            print("参考链接：" + ', '.join(rag_urls))
+            print("\n-----------------------------\n")
             
         else:
             # 开放题处理：KG和RAG各检索3篇，综合生成自由度较高的回答
             kg_answer, kg_entity = answer_with_kg(question, keywords)
-            #print("\n【KG答案】\n" + kg_answer + "\n")
+            print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索3篇
             contexts = retrieve(question, corpus, keywords, top_k=2)
-            #print("\n【RAG相关文章数量】", len(contexts))
+            print("\n【RAG相关文章数量】", len(contexts))
             # 综合生成开放性回答
             open_answer = open_question_agent(kg_answer, contexts, question, keywords)
             print(open_answer)
-            #print("\n-----------------------------\n")
+            print("\n-----------------------------\n")
 
         # 清理CUDA cache
         if torch.cuda.is_available():
