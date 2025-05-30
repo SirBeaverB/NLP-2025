@@ -1,0 +1,10 @@
+=== Stage-wise Runtime Summary ===
+Embedding & Input Norm    | CPU: 1264.28 us | CUDA: 125.41 us
+Attention QKV+RoPE        | CPU: 91013.67 us | CUDA: 41603.14 us
+Attention Weight          | CPU: 409814.36 us | CUDA: 265848.39 us
+Attention Output          | CPU: 187723.10 us | CUDA: 53449.91 us
+FFN                       | CPU: 104009.71 us | CUDA: 44202.87 us
+Tensor Manipulation       | CPU: 210917.38 us | CUDA: 93200.43 us
+Memory/Device Ops         | CPU: 711206.65 us | CUDA: 143921.53 us
+CUDA Kernel/Launch        | CPU: 856.44 us | CUDA: 267920.84 us
+Other                     | CPU: 920097.40 us | CUDA: 315343.91 us
