@@ -165,10 +165,10 @@ def ask_qwen3(prompt):
     return qwen_chat(messages)
 
 
-def extract_keywords_with_llm(question):
+def extract_keywords_with_llm(question, max=1):
     client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     prompt = (
-        "请从下面的问题中提取最关键的1个用于检索的关键词或短语，能少就少，注意不要有过多定语，但是也不要拆开专有名词，比如用书名号、引号括起来的书名、会议名等，你想通过搜索这个关键词找到相关内容。"
+        f"请从下面的问题中提取最关键的{max}个用于检索的关键词或短语，能少就少，注意不要有过多定语，但是也不要拆开专有名词，比如用书名号、引号括起来的书名、会议名等，你想通过搜索这个关键词找到相关内容。"
         "eg 获得第二十七届“中国青年五四奖章”的女性有谁？ 关键词：中国青年五四奖章"
         "eg 《习近平新时代中国特色社会主义思想专题摘编》民族文字版共有几个出版社参与发行？ 关键词：《习近平新时代中国特色社会主义思想专题摘编》"
         "此外，请判断该问题是否为开放题（即答案不是唯一事实、需要主观判断或综合分析），如果是开放题请输出True，否则输出False。"
@@ -220,7 +220,7 @@ def summarize_kg_rag(kg_answer, rag_answer, question):
         "【KG答案】：\n" + kg_answer + "\n"
         "【RAG答案】：\n" + rag_answer + "\n"
         "【用户问题】：\n" + question + "\n"
-        "请综合两部分信息，优先使用更权威、直接的内容，必要时可融合推理。若信息不足请直接回复信息不足。"
+        "请综合两部分信息，优先使用更rag所给出的更权威、直接的内容，必要时可融合推理。若信息不足请直接回复信息不足。"
     )
     messages = [{"role": "user", "content": prompt}]
     return qwen_chat(messages)
@@ -258,7 +258,7 @@ def main():
         if not is_open:
             # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
             kg_answer, kg_entity = answer_with_kg(question, keywords)
-            #print("\n【KG答案】\n" + kg_answer + "\n")
+            print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索最相关一篇
             contexts = retrieve(question, corpus, keywords, top_k=2)
             rag_answer = ''
@@ -284,7 +284,7 @@ def main():
                 if reread_contexts:
                     reread_prompt = build_prompt(reread_contexts, question, keywords)
                     reread_answer = ask_qwen3(reread_prompt)
-                    #print("\n【Reread最终答案】\n" + reread_answer + "\n")
+                    print("\n【Reread最终答案】\n" + reread_answer + "\n")
             fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
             print(fusion_answer)
             #print("参考链接：" + ', '.join(rag_urls))
