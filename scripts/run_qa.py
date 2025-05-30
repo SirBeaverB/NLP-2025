@@ -55,13 +55,13 @@ def evaluate(queries: list):
     with open('prompts/base_prompt.txt', 'r', encoding='utf-8') as f:
         base_prompt = f.read()
 
-    llm_model_name = "Qwen/Qwen3-4B"  # 或 "Qwen/Qwen3-4B"
+    '''llm_model_name = "Qwen/Qwen3-4B"  # 或 "Qwen/Qwen3-4B"
     llm_tokenizer = AutoTokenizer.from_pretrained(llm_model_name)
     llm_model = AutoModelForCausalLM.from_pretrained(
         llm_model_name,
         torch_dtype="auto",
         device_map="auto"
-    )
+    )'''
 
     # 加载知识图谱
     kg_path = 'kg/kg.pkl'
@@ -73,7 +73,7 @@ def evaluate(queries: list):
         try:
             # 先用 LLM agent 提取关键词
             keywords, is_open = extract_keywords_with_llm(question)
-            is_open = len(answers) >= 80  # 前80个是客观题，后20个是开放题
+            is_open = len(answers) >= 1  # 前80个是客观题，后20个是开放题
             
             if not is_open:
                 try:
@@ -191,6 +191,6 @@ if __name__ == '__main__':
 "哪些单位在中国期刊高质量发展论坛的主论坛上做主题演讲?",
 "绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策",
 "我国科技创新的重大成就有哪些?"]
-query = ["绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策"]
+query = ["2024年我国文化和旅游部部长是谁?","绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策"]
 ans = evaluate(query)
 print(ans)
