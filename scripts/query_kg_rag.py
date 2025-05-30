@@ -168,8 +168,9 @@ def ask_qwen3(prompt):
 def extract_keywords_with_llm(question):
     client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     prompt = (
-        "请从下面的问题中提取最关键的1-3个用于检索的关键词或短语，能少就少，注意不要有过多定语，你想通过搜索这个关键词找到相关内容。"
-        "只输出用逗号分隔的关键词列表，不要解释。\n"
+        "请从下面的问题中提取最关键的1个用于检索的关键词或短语，能少就少，注意不要有过多定语，但是也不要拆开专有名词，比如用书名号、引号括起来的书名、会议名等，你想通过搜索这个关键词找到相关内容。"
+        "eg 获得第二十七届“中国青年五四奖章”的女性有谁？ 关键词：中国青年五四奖章"
+        "eg 《习近平新时代中国特色社会主义思想专题摘编》民族文字版共有几个出版社参与发行？ 关键词：《习近平新时代中国特色社会主义思想专题摘编》"
         "此外，请判断该问题是否为开放题（即答案不是唯一事实、需要主观判断或综合分析），如果是开放题请输出True，否则输出False。"
         "输出格式严格如下：\n关键词：xxx,yyy\n开放题：True/False\n"
         "e.g. 问题：2024年我国文化和旅游部部长是谁？\n关键词：文化和旅游部部长\n开放题：False\n"
@@ -215,7 +216,7 @@ def answer_with_kg(question, keywords):
 # 综合KG和RAG答案
 def summarize_kg_rag(kg_answer, rag_answer, question):
     prompt = (
-        "请根据以下两部分信息，综合推理并用中文简明地回答用户问题，不需做出解释。\n"
+        "请根据以下两部分信息，综合推理并用中文简明地回答用户问题，不需做出解释，不要重复问题，只给出答案即可。\n"
         "【KG答案】：\n" + kg_answer + "\n"
         "【RAG答案】：\n" + rag_answer + "\n"
         "【用户问题】：\n" + question + "\n"
@@ -259,15 +260,14 @@ def main():
             kg_answer, kg_entity = answer_with_kg(question, keywords)
             print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索最相关一篇
-            contexts = retrieve(question, corpus, keywords, top_k=1)
+            contexts = retrieve(question, corpus, keywords, top_k=2)
             rag_answer = ''
             rag_urls = []
             if contexts:
-                doc = contexts[0]
-                # 直接使用最相关文章构建prompt
-                prompt = build_prompt([doc], question, keywords)
+                # 使用所有相关文章构建prompt
+                prompt = build_prompt(contexts, question, keywords)
                 rag_answer = ask_qwen3(prompt)
-                rag_urls = [doc.get('url', '')] if doc.get('url') else []
+                rag_urls = [doc.get('url', '') for doc in contexts if doc.get('url')]
             print("\n【RAG答案】\n" + rag_answer + "\n")
             print("\n【汇总】")
             print("KG答案：" + kg_answer)
