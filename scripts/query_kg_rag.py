@@ -9,17 +9,18 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import openai
 from utils_kg import KGUtils
 import gc
+from torch.nn.parallel import DataParallel
 
 '''
 openai的API有点贵，还容易超token，只用做关键词提取
-直接改用Qwen3-4B本地部署
+直接改用Qwen2.5-7B本地部署
 '''
 
 # Load model directly
-from transformers import pipeline
+#from transformers import pipeline
 
-# 初始化Qwen3-4B pipeline
-qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-4B")
+# 初始化Qwen2.5-7B pipeline
+#qwen_pipe = pipeline("text-generation", model="Qwen/Qwen2.5-7B-instruct")
 
 # 加载配置
 with open('config.yaml', 'r') as f:
@@ -32,17 +33,39 @@ TOP_K = config['top_k']
 # 加载embedding模型
 model = SentenceTransformer(EMBEDDING_MODEL)
 if torch.cuda.is_available():
-    model = model.to('cuda')
-    print('Using CUDA for embedding')
+    n_gpus = torch.cuda.device_count()
+    if n_gpus > 1:
+        print(f"Using {n_gpus} GPUs for embedding (DataParallel)")
+        model = DataParallel(model)
+        device = 'cuda'
+    else:
+        print('Using single GPU for embedding')
+        device = 'cuda'
+    model = model.to(device)
 else:
     print('Using CPU for embedding')
+    device = 'cpu'
+
+# DataParallel下需特殊处理encode
+
+def encode_query(texts, device, batch_size=32):
+    if isinstance(model, DataParallel):
+        all_emb = []
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i+batch_size]
+            emb = model.module.encode(batch, device=device, convert_to_numpy=True)
+            all_emb.append(emb)
+        import numpy as np
+        return np.concatenate(all_emb, axis=0)
+    else:
+        return model.encode(texts, device=device, convert_to_numpy=True)
 
 # 加载faiss索引和元数据
 if torch.cuda.is_available() and hasattr(faiss, 'StandardGpuResources'):
-    res = faiss.StandardGpuResources()
+    ngpus = faiss.get_num_gpus()
+    print(f"Using {ngpus} GPUs for FAISS search")
     cpu_index = faiss.read_index(INDEX_PATH)
-    index = faiss.index_cpu_to_gpu(res, 0, cpu_index)
-    print('Using FAISS GPU for search')
+    index = faiss.index_cpu_to_all_gpus(cpu_index)
 else:
     index = faiss.read_index(INDEX_PATH)
     print('Using FAISS CPU for search')
@@ -53,7 +76,7 @@ with open(INDEX_PATH + '.meta', 'r', encoding='utf-8') as f:
 with open('prompts/base_prompt.txt', 'r', encoding='utf-8') as f:
     base_prompt = f.read()
 
-llm_model_name = "Qwen/Qwen3-4B"  # 或 "Qwen/Qwen3-4B"
+llm_model_name = "Qwen/Qwen2.5-7B-instruct"  # 或 "Qwen/Qwen3-4B"
 llm_tokenizer = AutoTokenizer.from_pretrained(llm_model_name)
 llm_model = AutoModelForCausalLM.from_pretrained(
     llm_model_name,
@@ -100,7 +123,7 @@ def simple_keyword_search(corpus, keywords, top_k=5):
 
 def retrieve(query, corpus, keywords, top_k=5):
     # embedding 检索
-    query_emb = model.encode([query], device='cuda' if torch.cuda.is_available() else 'cpu')
+    query_emb = encode_query([query], device=device)
     D, I = index.search(query_emb, top_k)
     emb_docs = [corpus[i] for i in I[0]]
     # 关键词检索
@@ -169,7 +192,7 @@ def extract_keywords_with_llm(question, max=1):
     client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     prompt = (
         f"请从下面的问题中提取最关键的{max}个用于检索的关键词或短语，能少就少，注意不要有过多定语，但是也不要拆开专有名词，比如用书名号、引号括起来的书名、会议名等，你想通过搜索这个关键词找到相关内容。"
-        "eg 获得第二十七届“中国青年五四奖章”的女性有谁？ 关键词：中国青年五四奖章"
+        "eg 获得第二十七届中国青年五四奖章的女性有谁？ 关键词：中国青年五四奖章"
         "eg 《习近平新时代中国特色社会主义思想专题摘编》民族文字版共有几个出版社参与发行？ 关键词：《习近平新时代中国特色社会主义思想专题摘编》"
         "此外，请判断该问题是否为开放题（即答案不是唯一事实、需要主观判断或综合分析），如果是开放题请输出True，否则输出False。"
         "输出格式严格如下：\n关键词：xxx,yyy\n开放题：True/False\n"

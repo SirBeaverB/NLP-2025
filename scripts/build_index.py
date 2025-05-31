@@ -7,6 +7,7 @@ from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 import faiss
 import torch
+from torch.nn.parallel import DataParallel
 
 # 加载配置
 with open('config.yaml', 'r') as f:
@@ -41,20 +42,42 @@ print(f"Found {len(contents)} contents in {DATA_PATH}")
 # 生成embedding
 model = SentenceTransformer(EMBEDDING_MODEL)
 if torch.cuda.is_available():
-    model = model.to('cuda')
-    print('Using CUDA for embedding')
+    n_gpus = torch.cuda.device_count()
+    if n_gpus > 1:
+        print(f"Using {n_gpus} GPUs for embedding (DataParallel)")
+        model = DataParallel(model)
+        device = 'cuda'
+    else:
+        print('Using single GPU for embedding')
+        device = 'cuda'
+    model = model.to(device)
 else:
     print('Using CPU for embedding')
-embeddings = model.encode(contents, show_progress_bar=True, convert_to_numpy=True, device='cuda' if torch.cuda.is_available() else 'cpu')
+    device = 'cpu'
+
+# DataParallel下需特殊处理encode
+if isinstance(model, DataParallel):
+    def dp_encode(texts, **kwargs):
+        # DataParallel下forward返回list,需拼接
+        all_emb = []
+        batch_size = kwargs.get('batch_size', 32)
+        for i in tqdm(range(0, len(texts), batch_size)):
+            batch = texts[i:i+batch_size]
+            emb = model.module.encode(batch, device=device, convert_to_numpy=True)
+            all_emb.append(emb)
+        return np.concatenate(all_emb, axis=0)
+    embeddings = dp_encode(contents, batch_size=64)
+else:
+    embeddings = model.encode(contents, show_progress_bar=True, convert_to_numpy=True, device=device)
 
 # 构建faiss索引
 if torch.cuda.is_available() and hasattr(faiss, 'StandardGpuResources'):
-    res = faiss.StandardGpuResources()
+    ngpus = faiss.get_num_gpus()
+    print(f"Using {ngpus} GPUs for FAISS indexing")
     index = faiss.IndexFlatL2(embeddings.shape[1])
-    gpu_index = faiss.index_cpu_to_gpu(res, 0, index)
+    gpu_index = faiss.index_cpu_to_all_gpus(index)
     gpu_index.add(embeddings)
     index = faiss.index_gpu_to_cpu(gpu_index)
-    print('Using FAISS GPU for indexing')
 else:
     index = faiss.IndexFlatL2(embeddings.shape[1])
     index.add(embeddings)

@@ -13,7 +13,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import openai
 from utils_kg import KGUtils
 import gc
-from transformers import pipeline
+#from transformers import pipeline
 
 def evaluate(queries: list):
     """
@@ -21,7 +21,7 @@ def evaluate(queries: list):
     Return: List[str] 输出答案列表
     """
     # 初始化Qwen3-4B pipeline
-    qwen_pipe = pipeline("text-generation", model="Qwen/Qwen3-4B")
+    #qwen_pipe = pipeline("text-generation", model="Qwen/Qwen2.5-7B-instruct")
 
     # 加载配置
     with open('config.yaml', 'r') as f:
@@ -73,7 +73,7 @@ def evaluate(queries: list):
         try:
             # 先用 LLM agent 提取关键词
             keywords, is_open = extract_keywords_with_llm(question)
-            is_open = len(answers) >= 1  # 前80个是客观题，后20个是开放题
+            is_open = len(answers) >= 80  # 前80个是客观题，后20个是开放题
             
             if not is_open:
                 try:
