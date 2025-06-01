@@ -18,6 +18,7 @@ INDEX_PATH = config['index_path']
 EMBEDDING_MODEL = config['embedding_model']
 
 # 加载语料
+# 加载语料
 files = glob.glob(os.path.join(DATA_PATH, '*.json'))
 print(f"Found {len(files)} JSON files in {DATA_PATH}")
 corpus = []
@@ -29,14 +30,17 @@ for file in files:
             data_list = [data_list]
         for data in data_list:
             if isinstance(data, dict):
-                text = data.get('content') or data.get('text')
+                text = data.get('chunk_content') or data.get('text')
+                title = data.get('title', '')
+                full_text = (title or '') + ' ' + (text or '')
                 if text:
                     corpus.append(data)
-                    contents.append(text)
+                    contents.append(full_text)
             elif isinstance(data, str):
-                corpus.append({'content': data})
+                corpus.append({'chunk_content': data})
                 contents.append(data)
 print(f"Found {len(contents)} contents in {DATA_PATH}")
+
 
 
 # 生成embedding
