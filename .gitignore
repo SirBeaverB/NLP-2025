@@ -176,3 +176,4 @@ cython_debug/
 # files too large
 index/faiss_index.bin.meta
 index/faiss_index.bin
+data_chunked/
