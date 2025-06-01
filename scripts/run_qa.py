@@ -77,11 +77,9 @@ def evaluate(queries: list):
             
             if not is_open:
                 try:
-                    # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
                     kg_answer, kg_entity = answer_with_kg(question, keywords)
                     
-                    # RAG检索最相关一篇
-                    contexts = retrieve(question, corpus, keywords, top_k=2)
+                    contexts = retrieve(question, corpus, keywords, top_k=20)
                     rag_answer = ''
                     rag_urls = []
                     
@@ -105,14 +103,11 @@ def evaluate(queries: list):
                     
                     fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
                     
-                    # 如果答案包含"信息不足"或"未找到"，尝试用更多关键词重新检索
                     if "信息不足" in fusion_answer or "未找到" in fusion_answer:
-                        # 重新提取更多关键词
                         keywords, _ = extract_keywords_with_llm(question, max=2)
                         
-                        # 重新进行KG和RAG检索
                         kg_answer, kg_entity = answer_with_kg(question, keywords)
-                        contexts = retrieve(question, corpus, keywords, top_k=2)
+                        contexts = retrieve(question, corpus, keywords, top_k=20)
                         rag_answer = ''
                         rag_urls = []
                         
@@ -140,9 +135,8 @@ def evaluate(queries: list):
                     answers.append("出错")
             else:
                 try:
-                    # 开放题处理：KG和RAG各检索3篇，综合生成自由度较高的回答
                     kg_answer, kg_entity = answer_with_kg(question, keywords)
-                    contexts = retrieve(question, corpus, keywords, top_k=2)
+                    contexts = retrieve(question, corpus, keywords, top_k=20)
                     open_answer = open_question_agent(kg_answer, contexts, question, keywords)
                     answers.append(open_answer)
                 except Exception as e:
@@ -160,7 +154,7 @@ def evaluate(queries: list):
                     ans_text = ans_text.replace(url, '')
                 answers[-1] = {
                     'ans': ans_text.strip(),
-                    'reference': urls
+                    'reference': urls[:5]
                 }
 
             # 清理CUDA cache
@@ -192,5 +186,21 @@ if __name__ == '__main__':
 "绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策",
 "我国科技创新的重大成就有哪些?"]
 query = ["2024年我国文化和旅游部部长是谁?","绿水青山就是金山银山，请根据近期新闻，给我国的绿色发展建言献策"]
+
+import chardet
+
+with open('queries.txt', 'rb') as f:
+    raw = f.read()
+    result = chardet.detect(raw)
+    encoding = result['encoding']
+
+with open('queries.txt', 'r', encoding=encoding) as f:
+    query = [line.strip() for line in f if line.strip()]
+
 ans = evaluate(query)
-print(ans)
+#print(ans)
+
+# 保存答案到文件
+with open('answers.json', 'w', encoding='utf-8') as f:
+    json.dump(ans, f, ensure_ascii=False, indent=2)
+print("answers saved in answers.json")

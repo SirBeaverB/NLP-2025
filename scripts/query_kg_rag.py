@@ -49,16 +49,20 @@ else:
 # DataParallel下需特殊处理encode
 
 def encode_query(texts, device, batch_size=32):
+    import torch
     if isinstance(model, DataParallel):
         all_emb = []
         for i in range(0, len(texts), batch_size):
             batch = texts[i:i+batch_size]
-            emb = model.module.encode(batch, device=device, convert_to_numpy=True)
+            emb = model.module.encode(batch, device=device, convert_to_tensor=True)
+            emb = emb / (emb.norm(dim=1, keepdim=True) + 1e-8)
             all_emb.append(emb)
-        import numpy as np
-        return np.concatenate(all_emb, axis=0)
+        return torch.cat(all_emb, dim=0).cpu().numpy()
     else:
-        return model.encode(texts, device=device, convert_to_numpy=True)
+        emb = model.encode(texts, device=device, convert_to_tensor=True)
+        emb = emb / (emb.norm(dim=1, keepdim=True) + 1e-8)
+        return emb.cpu().numpy()
+
 
 # 加载faiss索引和元数据
 if torch.cuda.is_available() and hasattr(faiss, 'StandardGpuResources'):
@@ -108,12 +112,14 @@ def qwen_chat(messages, max_new_tokens=2048):
     content = llm_tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
     return content
 
-def simple_keyword_search(corpus, keywords, top_k=5):
+def simple_keyword_search(corpus, keywords, top_k=20):
     print("用于关键词检索的关键词:", keywords)
     scores = []
     for idx, doc in enumerate(corpus):
-        content = doc.get('content', doc.get('text', ''))
-        score = sum(content.count(k) for k in keywords)
+        content = doc.get('chunk_content', doc.get('text', ''))
+        #title = doc.get('title', '')
+        full_text = content or ''
+        score = sum(full_text.count(k) for k in keywords)
         scores.append((score, idx))
     # 取分数最高的top_k
     scores.sort(reverse=True)
@@ -121,7 +127,8 @@ def simple_keyword_search(corpus, keywords, top_k=5):
     return [corpus[i] for i in top_idxs]
 
 
-def retrieve(query, corpus, keywords, top_k=5):
+
+def retrieve(query, corpus, keywords, top_k=20):
     # embedding 检索
     query_emb = encode_query([query], device=device)
     D, I = index.search(query_emb, top_k)
@@ -152,14 +159,30 @@ def extract_relevant_snippet(content, question, keywords, max_length=1000):
     return content[start:end]
 
 
+def expand_chunk_context(chunk, all_chunks, window=1):
+    """
+    给定一个chunk，返回它前后window个chunk合并的内容
+    """
+    article_id = chunk.get('article_id') or chunk.get('source') or chunk.get('filename')
+    chunk_id = chunk['chunk_id']
+    article_chunks = [c for c in all_chunks if (c.get('article_id') or c.get('source') or c.get('filename')) == article_id]
+    article_chunks = sorted(article_chunks, key=lambda x: x['chunk_id'])
+    idx = next((i for i, c in enumerate(article_chunks) if c['chunk_id'] == chunk_id), None)
+    if idx is None:
+        return chunk.get('chunk_content', chunk.get('content', chunk.get('text', '')))
+    start = max(0, idx - window)
+    end = min(len(article_chunks), idx + window + 1)
+    expanded = ''.join([c.get('chunk_content', c.get('content', c.get('text', ''))) for c in article_chunks[start:end]])
+    return expanded
+
+
 def build_prompt(contexts, question, keywords):
-    # 拼接每条的title、url、content等（只取相关片段）
     context_str = ''
     for doc in contexts:
         title = doc.get('title', '')
         url = doc.get('url', '')
         date = doc.get('date', '')
-        content = doc.get('content', doc.get('text', ''))
+        content = doc.get('expanded_content', doc.get('chunk_content', doc.get('content', doc.get('text', ''))))
         snippet = extract_relevant_snippet(content, question, keywords, max_length=1000)
         context_str += f"【标题】{title}\n【日期】{date}\n【链接】{url}\n【内容】{snippet}\n\n"
     prompt = base_prompt.replace('{context}', context_str).replace('{question}', question)
@@ -260,7 +283,7 @@ def open_question_agent(kg_answer, rag_docs, question, keywords):
         rag_context += f"【标题】{title}\n【日期】{date}\n【链接】{url}\n【内容】{snippet}\n\n"
     prompt = (
         "你是一个知识型问答助手。请综合下列知识图谱信息和检索到的多篇文章内容，给出一个自由度较高、结构化、条理清晰的中文回答。"
-        "可以适当分析、归纳、推理，允许有主观判断，但要基于提供的内容。不多于512个字。"
+        "可以适当分析、归纳、推理，允许有主观判断，但要基于提供的内容。不多于512个字, 不要有多于5个url。"
         "如有引用内容，请在段末注明来源url。若信息不足可适当发挥，但不要编造具体事实。\n\n"
         f"【知识图谱信息】\n{kg_answer}\n\n"
         f"【相关文章内容】\n{rag_context}\n"
@@ -279,11 +302,12 @@ def main():
         #print("LLM提取的关键词:", keywords)
         #print("是否为开放题:", is_open)
         if not is_open:
-            # 非开放题：只用KG和RAG检索，RAG只找最相关一篇文章
             kg_answer, kg_entity = answer_with_kg(question, keywords)
             print("\n【KG答案】\n" + kg_answer + "\n")
             # RAG检索最相关一篇
-            contexts = retrieve(question, corpus, keywords, top_k=2)
+            contexts = retrieve(question, corpus, keywords, top_k=20)
+            for doc in contexts:
+                doc['expanded_content'] = expand_chunk_context(doc, corpus, window=1)
             rag_answer = ''
             rag_urls = []
             if contexts:
@@ -310,15 +334,45 @@ def main():
                     print("\n【Reread最终答案】\n" + reread_answer + "\n")
             fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
             print(fusion_answer)
-            #print("参考链接：" + ', '.join(rag_urls))
-            #print("\n-----------------------------\n")
+            
+            if "信息不足" in fusion_answer or "未找到" in fusion_answer:
+                # 重新提取更多关键词
+                keywords, _ = extract_keywords_with_llm(question, max=2)
+                
+                # 重新进行KG和RAG检索
+                kg_answer, kg_entity = answer_with_kg(question, keywords)
+                contexts = retrieve(question, corpus, keywords, top_k=20)
+                for doc in contexts:
+                    doc['expanded_content'] = expand_chunk_context(doc, corpus, window=1)
+                rag_answer = ''
+                rag_urls = []
+                
+                if contexts:
+                    prompt = build_prompt(contexts, question, keywords)
+                    rag_answer = ask_qwen3(prompt)
+                    rag_urls = [doc.get('url', '') for doc in contexts if doc.get('url')]
+                
+                if rag_urls:
+                    reread_contexts = []
+                    for url in rag_urls:
+                        for doc in corpus:
+                            if doc.get('url', '') == url:
+                                reread_contexts.append(doc)
+                                break
+                    if reread_contexts:
+                        reread_prompt = build_prompt(reread_contexts, question, keywords)
+                        reread_answer = ask_qwen3(reread_prompt)
+                
+                fusion_answer = summarize_kg_rag(kg_answer, reread_answer if rag_urls and reread_contexts else rag_answer, question)
+                print("\n【重试后的答案】\n" + fusion_answer)
             
         else:
-            # 开放题处理：KG和RAG各检索3篇，综合生成自由度较高的回答
+            # 改成搜索文章切块之后，需要搜索更多chunk，但最后只给出最多5个url
             kg_answer, kg_entity = answer_with_kg(question, keywords)
             #print("\n【KG答案】\n" + kg_answer + "\n")
-            # RAG检索3篇
-            contexts = retrieve(question, corpus, keywords, top_k=2)
+            contexts = retrieve(question, corpus, keywords, top_k=20)
+            for doc in contexts:
+                doc['expanded_content'] = expand_chunk_context(doc, corpus, window=1)
             #print("\n【RAG相关文章数量】", len(contexts))
             # 综合生成开放性回答
             open_answer = open_question_agent(kg_answer, contexts, question, keywords)
