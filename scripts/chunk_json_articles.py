@@ -31,7 +31,7 @@ for filename in os.listdir(data_dir):
         content = data.get('content') or data.get('text')
         if not content:
             continue
-        chunks = split_into_chunks(content, chunk_size=300, overlap=50)
+        chunks = split_into_chunks(content, chunk_size=400, overlap=200)
         for idx, chunk in enumerate(chunks):
             chunk_data = data.copy()  # 保留原有元信息
             chunk_data['chunk_content'] = chunk

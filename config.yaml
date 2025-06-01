@@ -1,4 +1,4 @@
-embedding_model: 
+embedding_model: moka-ai/m3e-base
 llm_model: gpt-4o-mini
 index_path: index/faiss_index.bin
 data_path: data_chunked/

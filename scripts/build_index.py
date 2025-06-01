@@ -73,7 +73,12 @@ if isinstance(model, DataParallel):
     embeddings = dp_encode(contents, batch_size=64)
 else:
     embeddings = model.encode(contents, show_progress_bar=True, convert_to_numpy=True, device=device)
-
+if isinstance(embeddings, np.ndarray):
+    embeddings = torch.from_numpy(embeddings)
+embeddings = embeddings / (embeddings.norm(dim=1, keepdim=True) + 1e-8)
+if hasattr(embeddings, 'cpu'):
+    embeddings = embeddings.cpu().numpy()
+    
 # 构建faiss索引
 if torch.cuda.is_available() and hasattr(faiss, 'StandardGpuResources'):
     ngpus = faiss.get_num_gpus()

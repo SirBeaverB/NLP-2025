@@ -1,5 +1,5 @@
 # NLP-2025
-homework repo!
+Homework repo!
 
 
 In a new environment, after installing requirements, run `chunk_json_articles.py`, `build_index.py`, add openai API key, then run `query_kg_rag.py` for random questions and `run_query.py`for test.
